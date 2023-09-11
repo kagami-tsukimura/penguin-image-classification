@@ -1,0 +1,23 @@
+EXPERIMENTS:
+  ver: 'r0'
+  mlflow: 'penguin'
+PREPARE:
+  batch_size: 16
+CNN:
+  mode: 'penguin'
+  seed: 42
+  backborn: efficientnet # resnet
+  epoch: 10
+  classification: 7
+TARGETS:
+  - Aptenodytes
+  - Pygoscelis
+  - Spheniscus
+  - Eudyptes
+  - Megadyptes
+  - Eudyptula
+  - Other
+PATH:
+  work: './'
+  model: 'model'
+  data: 'data/penguins'
