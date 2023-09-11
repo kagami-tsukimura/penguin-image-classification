@@ -3,4 +3,13 @@ crawler/images/
 crawler/logs/
 
 # train
-train/data/
+train/data/*/*/*/*.jpg
+train/data/*/*/*/*.png
+train/data/*/*/*/*.jpeg
+
+# mlflow
+train/mlruns
+
+# artifact
+*.pt
+eval.txt
