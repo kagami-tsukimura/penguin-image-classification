@@ -16,3 +16,6 @@ eval.txt
 
 # gradcam
 gradcam/heatmap/*
+
+# venv
+venv/
