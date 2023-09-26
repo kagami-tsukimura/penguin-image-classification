@@ -17,14 +17,14 @@ def setting_backborn():
 
     if config["CNN"]["backborn"] == "efficientnet":
         model = models.efficientnet_v2_s(pretrained=True).to(device)
-        for param in model.parameters:
+        for param in model.parameters():
             param.requires_grad = True
         model.classifier = nn.Linear(
             in_features=1280, out_features=config["CNN"]["classification"]
         ).to(device, non_blocking=True)
     elif config["CNN"]["backborn"] == "resnet":
         model = models.resnet101(pretrained=True).to(device, non_blocking=True)
-        for param in model.parameters:
+        for param in model.parameters():
             param.requires_grad = True
         model.fc = nn.Linear(
             in_features=512, out_features=config["CNN"]["classification"]
@@ -53,7 +53,7 @@ def prepare_data():
 
 def eval_cnn(img, test_transform, model):
     test_img = Image.open(img).convert("RGB")
-    test_img_tensor = test_transform(test_img).unsqueeze(0)
+    test_img_tensor = test_transform(test_img).unsqueeze(0).cuda()
     model.eval()
     with torch.no_grad():
         output = model(test_img_tensor)
