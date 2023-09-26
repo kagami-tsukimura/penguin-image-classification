@@ -36,3 +36,8 @@ def setting_backborn():
 def load_settings():
     with open("./settings.yaml", "r") as f:
         return yaml.safe_load(f)
+
+
+def mkdirs(dirs):
+    for dir in dirs:
+        os.makedirs(dir, exist_ok=True)
