@@ -60,3 +60,23 @@ def eval_cnn(img, test_transform, model):
         pred = torch.argmax(output).item()
 
     return pred
+
+
+def judge_pred(pred, dirs):
+    # TODO: refactor
+    if pred == 0:
+        dst_dir = dirs[0]
+    elif pred == 1:
+        dst_dir = dirs[1]
+    elif pred == 2:
+        dst_dir = dirs[2]
+    elif pred == 3:
+        dst_dir = dirs[3]
+    elif pred == 4:
+        dst_dir = dirs[4]
+    elif pred == 5:
+        dst_dir = dirs[5]
+    elif pred == 6:
+        dst_dir = dirs[6]
+
+    return dst_dir
