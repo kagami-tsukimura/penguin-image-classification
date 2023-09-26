@@ -49,3 +49,14 @@ def prepare_data():
     )
 
     return test_transform
+
+
+def eval_cnn(img, test_transform, model):
+    test_img = Image.open(img).convert("RGB")
+    test_img_tensor = test_transform(test_img).unsqueeze(0)
+    model.eval()
+    with torch.no_grad():
+        output = model(test_img_tensor)
+        pred = torch.argmax(output).item()
+
+    return pred
