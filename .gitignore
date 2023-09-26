@@ -21,4 +21,4 @@ gradcam/heatmap/*
 venv/
 
 # edit
-train/edit/*
+train/data/edit/*
