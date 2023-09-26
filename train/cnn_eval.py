@@ -85,3 +85,33 @@ def judge_pred(pred, dirs):
 def mv_file(img, dst_dir):
     cmd = f"mv {img} {dst_dir}"
     subprocess.check_call(cmd.split())
+
+
+def main():
+    MODEL = "./weights/efficientnet-penguin-7cls.pt"
+    LABEL_PATH = "./data/edit/"
+    DIRS = [
+        f"{LABEL_PATH}/0Aptenodytes",
+        f"{LABEL_PATH}/1Pygoscelis",
+        f"{LABEL_PATH}/2Spheniscus",
+        f"{LABEL_PATH}/3Eudyptes",
+        f"{LABEL_PATH}/4Megadyptes",
+        f"{LABEL_PATH}/5Eudyptula",
+        f"{LABEL_PATH}/6Other",
+    ]
+
+    model = setting_backborn()
+    model.load_state_dict(torch.load(MODEL))
+    imgs = glob(f"{LABEL_PATH}/*.*")
+    mkdirs(DIRS)
+    # NOTE: Make sure you can read large sized images.
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    test_transform = prepare_data()
+    for img in tqdm(imgs):
+        pred = eval_cnn(img, test_transform, model)
+        dst_dir = judge_pred(pred, DIRS)
+        mv_file(img, dst_dir)
+
+
+if __name__ == "__main__":
+    main()
