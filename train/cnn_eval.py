@@ -80,3 +80,8 @@ def judge_pred(pred, dirs):
         dst_dir = dirs[6]
 
     return dst_dir
+
+
+def mv_file(img, dst_dir):
+    cmd = f"mv {img} {dst_dir}"
+    subprocess.check_call(cmd.split())
