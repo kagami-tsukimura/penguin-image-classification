@@ -19,3 +19,6 @@ gradcam/heatmap/*
 
 # venv
 venv/
+
+# edit
+train/edit/*
