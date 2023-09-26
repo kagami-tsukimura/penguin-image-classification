@@ -308,9 +308,14 @@ class CNNTrainer:
         log_metric("Test Acc", f"{test_acc*100:.2f}")
 
     def transform_for_cnn(self):
-        cnn_transforms = transforms.Compose(
-            [transforms.Resize((384, 384)), transforms.ToTensor()]
-        )
+        if self.config["CNN"]["backborn"] == "efficientnet":
+            cnn_transforms = transforms.Compose(
+                [transforms.Resize((384, 384)), transforms.ToTensor()]
+            )
+        elif self.config["CNN"]["backborn"] == "resnet":
+            cnn_transforms = transforms.Compose(
+                [transforms.Resize((224, 224)), transforms.ToTensor()]
+            )
 
         return cnn_transforms
 
