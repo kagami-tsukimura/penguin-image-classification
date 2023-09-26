@@ -41,3 +41,11 @@ def load_settings():
 def mkdirs(dirs):
     for dir in dirs:
         os.makedirs(dir, exist_ok=True)
+
+
+def prepare_data():
+    test_transform = transforms.Compose(
+        [transforms.Resize(((384, 384))), transforms.ToTensor()]
+    )
+
+    return test_transform
