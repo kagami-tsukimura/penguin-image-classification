@@ -1,4 +1,5 @@
 import React from 'react';
+import { GiPenguin } from 'react-icons/gi';
 
 const Header: React.FC = () => {
   return (
@@ -9,11 +10,12 @@ const Header: React.FC = () => {
       >
         <div className='flex items-center justify-between'>
           <a
-            className='flex-none text-2xl font-bold text-cyan-600 dark:text-cyan-200 '
+            className='whitespace-nowrap flex items-center text-2xl font-bold text-cyan-600 dark:text-cyan-200'
             href='#'
             aria-label='ペンギンの分類'
           >
             ペンギンの分類
+            <GiPenguin />
           </a>
           <div className='sm:hidden'>
             <button
