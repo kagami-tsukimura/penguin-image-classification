@@ -194,6 +194,9 @@ class CNNTrainer:
     def predict_image(self, image, transforms, model):
         image_tensor = transforms(image).float()
         image_tensor = image_tensor.unsqueeze_(0)
+        # アルファチャンネルを削除する
+        image_tensor = image_tensor[:, :3, :, :]
+
         input = Variable(image_tensor)
         input = input.to(self.device, non_blocking=True)
         output = model(input)
@@ -204,7 +207,7 @@ class CNNTrainer:
     def predict_dir(self, file_list, transforms, model):
         results = [0] * self.config["CNN"]["classification"]
         for file in file_list:
-            img = Image.open(file).convert("RGB")
+            img = Image.open(file).convert("RGBA")
             idx = self.predict_image(img, transforms, model)
             results[idx] += 1
 
@@ -229,9 +232,7 @@ class CNNTrainer:
             self.config["TARGETS"], train_files, test_files, cls_weights
         ):
             print(f"Class: {target}")
-            print(f"Train Files: {train_file}")
-            print(f"Test Files: {test_file}")
-            print(f"Weight: {cls_weight}", end="\n\n")
+            print(f"Train: {train_file} | Test: {test_file} | Weight: {cls_weight}")
         criterion = nn.CrossEntropyLoss(weight=weights)
         best_valid_loss = float("inf")
 
