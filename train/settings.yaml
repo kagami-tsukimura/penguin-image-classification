@@ -7,7 +7,7 @@ CNN:
   mode: 'penguin'
   seed: 42
   backborn: efficientnet # resnet
-  epoch: 30
+  epoch: 50
   classification: 7
 TARGETS:
   - Aptenodytes

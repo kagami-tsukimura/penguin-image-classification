@@ -232,9 +232,7 @@ class CNNTrainer:
             self.config["TARGETS"], train_files, test_files, cls_weights
         ):
             print(f"Class: {target}")
-            print(f"Train Files: {train_file}")
-            print(f"Test Files: {test_file}")
-            print(f"Weight: {cls_weight}", end="\n\n")
+            print(f"Train: {train_file} | Test: {test_file} | Weight: {cls_weight}")
         criterion = nn.CrossEntropyLoss(weight=weights)
         best_valid_loss = float("inf")
 
