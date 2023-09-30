@@ -1,13 +1,12 @@
 import './App.css';
+import Header from './components/Header';
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
-      <div>
-        <h1 className='p-2 text-teal-200'>ペンギンの分類</h1>
-      </div>
+      <Header />
     </>
   );
-}
+};
 
 export default App;
