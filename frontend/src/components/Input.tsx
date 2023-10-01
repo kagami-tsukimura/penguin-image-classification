@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
+import { GiPenguin } from 'react-icons/gi';
 
-const Input = () => {
-  const [profileImage, setProfileImage] = useState<string>(
-    'default-profile.png'
-  );
+interface InputProps {
+  profileImage: string;
+  setProfileImage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
   const [isTooltip, setIsTooltip] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null!);
 
@@ -24,7 +27,11 @@ const Input = () => {
   return (
     <div className='items-center mt-8'>
       <div className='flex items-center justify-center'>
-        <img src={profileImage} className='object-contain h-32 w-32' />
+        {profileImage ? (
+          <img src={profileImage} className='object-contain h-32 w-32' />
+        ) : (
+          <></>
+        )}
       </div>
       <input
         hidden
@@ -35,7 +42,7 @@ const Input = () => {
       />
       {/* ファイル選択用のボタンを用意 */}
       <button
-        className='bg-violet-700 hover:bg-violet-900 text-white px-4 py-2 rounded-md mt-4 '
+        className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
         onClick={onProfileButtonClick}
         onMouseMove={() => setIsTooltip(true)}
         onMouseLeave={() => setIsTooltip(false)}
@@ -43,8 +50,10 @@ const Input = () => {
         分類する画像を選択
       </button>
       {isTooltip && (
-        <div className='absolute mt-4 text-gray-400 rounded text-xs'>
-          HINT: お気に入りのペンギンを選択しよう
+        <div className='absolute mt-4 text-gray-400 rounded text-xs flex items-center'>
+          <GiPenguin />
+          HINT: お気に入りのペンギンを選択してね
+          <GiPenguin className='transform scale-x-[-1]' />
         </div>
       )}
     </div>

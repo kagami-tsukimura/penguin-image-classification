@@ -14,8 +14,9 @@ const Header: React.FC = () => {
             href='#'
             aria-label='ペンギンの分類'
           >
-            ペンギンの分類
             <GiPenguin />
+            ペンギンの分類
+            <GiPenguin className='transform scale-x-[-1]' />
           </a>
           <div className='sm:hidden'>
             <button
