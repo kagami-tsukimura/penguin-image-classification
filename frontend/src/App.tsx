@@ -7,7 +7,7 @@ import Output from './components/Output';
 import Send from './components/Send';
 
 const App: React.FC = () => {
-  const [profileImage, setProfileImage] = useState<string>('');
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [data, setData] = useState<string>('');
 
   return (
