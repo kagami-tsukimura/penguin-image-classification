@@ -8,6 +8,8 @@ import Send from './components/Send';
 
 const App: React.FC = () => {
   const [profileImage, setProfileImage] = useState<string>('');
+  const [data, setData] = useState<string>('');
+
   return (
     <>
       <Header />
@@ -17,10 +19,10 @@ const App: React.FC = () => {
             profileImage={profileImage}
             setProfileImage={setProfileImage}
           />
-          <Send profileImage={profileImage} />
+          <Send profileImage={profileImage} setData={setData} />
         </div>
 
-        <Output />
+        <Output data={data} />
       </div>
       <Footer />
     </>
