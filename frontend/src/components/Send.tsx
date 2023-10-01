@@ -1,18 +1,19 @@
 import axios from 'axios';
 
 interface SendProps {
-  profileImage: File | null; // File オブジェクトを受け取る
-  setData: React.Dispatch<React.SetStateAction<string>>;
+  profileImage: File | null;
+  setId: React.Dispatch<React.SetStateAction<number | null>>;
+  setName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Send: React.FC<SendProps> = ({ profileImage, setData }) => {
+const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
   const url: string = 'http://127.0.0.1:8000/classify/';
 
-  const predictImage = async () => {
-    if (!profileImage) return; // ファイルが選択されていない場合は処理しない
+  const predictImage = async (): Promise<void> => {
+    if (!profileImage) return;
 
     const formData = new FormData();
-    formData.append('file', profileImage); // File オブジェクトを追加
+    formData.append('file', profileImage);
     axios
       .post(url, formData, {
         headers: {
@@ -20,7 +21,8 @@ const Send: React.FC<SendProps> = ({ profileImage, setData }) => {
         },
       })
       .then((res) => {
-        setData(res.data.result);
+        setId(Number(res.data.id));
+        setName(res.data.name);
       })
       .catch((error) => {
         console.error(error);

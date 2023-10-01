@@ -3,7 +3,7 @@ import { GiPenguin } from 'react-icons/gi';
 
 interface InputProps {
   profileImage: File | null;
-  setProfileImage: React.Dispatch<React.SetStateAction<File | null>>; // File オブジェクトを受け取る
+  setProfileImage: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
     if (!e.target.files) return;
 
     const fileObject = e.target.files[0];
-    setProfileImage(fileObject); // File オブジェクトをセット
+    setProfileImage(fileObject);
   };
 
   return (
@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         {profileImage ? (
           <img
             src={URL.createObjectURL(profileImage)}
-            className='object-contain h-32 w-32'
+            className='object-contain h-64 w-64'
             alt='プレビュー'
           />
         ) : (

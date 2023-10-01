@@ -8,7 +8,8 @@ import Send from './components/Send';
 
 const App: React.FC = () => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [data, setData] = useState<string>('');
+  const [id, setId] = useState<number | null>(null);
+  const [name, setName] = useState<string>('');
 
   return (
     <>
@@ -19,10 +20,9 @@ const App: React.FC = () => {
             profileImage={profileImage}
             setProfileImage={setProfileImage}
           />
-          <Send profileImage={profileImage} setData={setData} />
+          <Send profileImage={profileImage} setId={setId} setName={setName} />
         </div>
-
-        <Output data={data} />
+        <Output id={id} name={name} />
       </div>
       <Footer />
     </>
