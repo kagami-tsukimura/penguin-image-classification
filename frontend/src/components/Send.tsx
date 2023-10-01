@@ -6,9 +6,23 @@ interface InputProps {
 }
 
 const Send: React.FC<InputProps> = ({ profileImage, setData }) => {
-  const url: string = 'http://127.0.0.1:8000/';
-  const predictImage = () => {
-    axios.get(url).then((res) => setData(res.data.message));
+  const url: string = 'http://127.0.0.1:8000/classify/';
+
+  const predictImage = async () => {
+    const formData = new FormData();
+    formData.append('file', profileImage);
+    axios
+      .post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        setData(res.data.result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
