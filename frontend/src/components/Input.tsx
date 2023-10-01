@@ -2,8 +2,8 @@ import { useRef, useState } from 'react';
 import { GiPenguin } from 'react-icons/gi';
 
 interface InputProps {
-  profileImage: string;
-  setProfileImage: React.Dispatch<React.SetStateAction<string>>;
+  profileImage: File | null;
+  setProfileImage: React.Dispatch<React.SetStateAction<File | null>>; // File オブジェクトを受け取る
 }
 
 const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
@@ -11,24 +11,25 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
   const inputRef = useRef<HTMLInputElement>(null!);
 
   const onProfileButtonClick = () => {
-    // useRef<HTMLInputElement>のcurrent要素を呼び出し、ファイル選択画面を表示
     inputRef.current.click();
   };
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
-    // React.ChangeEvent<HTMLInputElement>よりファイルを取得
     const fileObject = e.target.files[0];
-    // オブジェクトURLを生成し、useState()を更新
-    setProfileImage(window.URL.createObjectURL(fileObject));
+    setProfileImage(fileObject); // File オブジェクトをセット
   };
 
   return (
     <div className='items-center mt-8'>
       <div className='flex items-center justify-center'>
         {profileImage ? (
-          <img src={profileImage} className='object-contain h-32 w-32' />
+          <img
+            src={URL.createObjectURL(profileImage)}
+            className='object-contain h-32 w-32'
+            alt='プレビュー'
+          />
         ) : (
           <></>
         )}
@@ -40,7 +41,6 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         accept='image/*'
         onChange={onFileInputChange}
       />
-      {/* ファイル選択用のボタンを用意 */}
       <button
         className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
         onClick={onProfileButtonClick}

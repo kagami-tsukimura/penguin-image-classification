@@ -1,14 +1,30 @@
 import axios from 'axios';
 
-interface InputProps {
-  profileImage: string;
+interface SendProps {
+  profileImage: File | null; // File オブジェクトを受け取る
   setData: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Send: React.FC<InputProps> = ({ profileImage, setData }) => {
-  const url: string = 'http://127.0.0.1:8000/';
-  const predictImage = () => {
-    axios.get(url).then((res) => setData(res.data.message));
+const Send: React.FC<SendProps> = ({ profileImage, setData }) => {
+  const url: string = 'http://127.0.0.1:8000/classify/';
+
+  const predictImage = async () => {
+    if (!profileImage) return; // ファイルが選択されていない場合は処理しない
+
+    const formData = new FormData();
+    formData.append('file', profileImage); // File オブジェクトを追加
+    axios
+      .post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        setData(res.data.result);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
