@@ -40,7 +40,7 @@ async def classify_image(file: UploadFile):
         pred = eval_cnn(img, test_transform, model)
         dst = judge_pred(pred)
 
-        return JSONResponse(content={"result": dst})
+        return JSONResponse(content={"id": pred, "name": dst})
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)})
