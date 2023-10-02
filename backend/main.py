@@ -1,5 +1,6 @@
 import io
 
+import uvicorn
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -44,3 +45,7 @@ async def classify_image(file: UploadFile):
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)})
+
+
+if __name__ == "__main__":
+    uvicorn.run(app)
