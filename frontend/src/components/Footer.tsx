@@ -19,9 +19,9 @@ const Footer: React.FC = () => {
             We're part of the{' '}
             <a
               className='font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
-              href='#'
+              href='https://kagami-portfolio.netlify.app/'
             >
-              Htmlstream
+              Kagami.com
             </a>{' '}
             family.
           </p>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
         <div className='mt-3 space-x-2'>
           <a
             className='inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800'
-            href='#'
+            href='mailto:kagami.penguin.t@gmail.com'
           >
             <svg
               className='w-3.5 h-3.5'
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
           </a>
           <a
             className='inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800'
-            href='#'
+            href='https://twitter.com/tukimurakagami'
           >
             <svg
               className='w-3.5 h-3.5'
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
           </a>
           <a
             className='inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800'
-            href='#'
+            href='https://github.com/kagami-tsukimura'
           >
             <svg
               className='w-3.5 h-3.5'
