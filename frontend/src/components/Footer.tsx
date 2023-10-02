@@ -19,9 +19,9 @@ const Footer: React.FC = () => {
             We're part of the{' '}
             <a
               className='font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400'
-              href='#'
+              href='https://kagami-portfolio.netlify.app/'
             >
-              Htmlstream
+              Kagami.com
             </a>{' '}
             family.
           </p>
