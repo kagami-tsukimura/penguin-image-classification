@@ -13,8 +13,8 @@ const Output: React.FC<ApiData> = ({ id, name }) => {
 
   return (
     <>
-      <div className='text-start'>
-        {topicById ? (
+      {topicById ? (
+        <div className='text-start'>
           <div className='flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]'>
             <img
               className='object-contain h-64 w-64 mx-auto'
@@ -34,10 +34,10 @@ const Output: React.FC<ApiData> = ({ id, name }) => {
               </p>
             </div>
           </div>
-        ) : (
-          '該当するトピックが見つかりません'
-        )}
-      </div>
+        </div>
+      ) : (
+        ''
+      )}
     </>
   );
 };
