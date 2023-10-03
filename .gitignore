@@ -15,6 +15,7 @@ train/mlruns
 # artifact
 *.pt
 eval.txt
+!backend/model/*.pt
 
 # gradcam
 gradcam/heatmap/*
