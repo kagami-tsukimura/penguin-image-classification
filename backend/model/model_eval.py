@@ -9,7 +9,10 @@ import torchvision.transforms as transforms
 def load_model(MODEL):
     PENGUIN_OUT = 7
     device, model = setting_backborn(PENGUIN_OUT)
-    model.load_state_dict(torch.load(MODEL))
+    if is_production():
+        model.load_state_dict(torch.load(MODEL, map_location=torch.device("cpu")))
+    else:
+        model.load_state_dict(torch.load(MODEL, map_location=torch.device("cuda")))
     model.eval()
 
     return device, model
