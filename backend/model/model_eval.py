@@ -1,3 +1,5 @@
+import os
+
 import torch
 import torch.nn as nn
 import torchvision.models as models
@@ -6,15 +8,15 @@ import torchvision.transforms as transforms
 
 def load_model(MODEL):
     PENGUIN_OUT = 7
-    model = setting_backborn(PENGUIN_OUT)
+    device, model = setting_backborn(PENGUIN_OUT)
     model.load_state_dict(torch.load(MODEL))
     model.eval()
 
-    return model
+    return device, model
 
 
 def setting_backborn(out_features):
-    device = torch.device("cuda")
+    device = torch.device("cpu" if is_production() else "cuda")
 
     model = models.efficientnet_v2_s(pretrained=True).to(device)
     for param in model.parameters():
@@ -23,7 +25,7 @@ def setting_backborn(out_features):
         device, non_blocking=True
     )
 
-    return model
+    return device, model
 
 
 def prepare_data():
@@ -34,8 +36,8 @@ def prepare_data():
     return test_transform
 
 
-def eval_cnn(img, test_transform, model):
-    test_img_tensor = test_transform(img).unsqueeze(0).cuda()
+def eval_cnn(img, test_transform, model, device):
+    test_img_tensor = test_transform(img).unsqueeze(0).to(device)
     with torch.no_grad():
         output = model(test_img_tensor)
         pred = torch.argmax(output).item()
@@ -57,3 +59,7 @@ def judge_pred(pred):
     dst = prediction.get(pred, "UNKNOWN")
 
     return dst
+
+
+def is_production():
+    return os.environ.get("ENV", None) is not None

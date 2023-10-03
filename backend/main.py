@@ -10,7 +10,7 @@ from PIL import Image, ImageFile
 app = FastAPI()
 
 MODEL = "./model/efficientnet-penguin-7cls.pt"
-model = load_model(MODEL)
+device, model = load_model(MODEL)
 
 # CORSミドルウェアを有効にする
 app.add_middleware(
@@ -38,7 +38,7 @@ async def classify_image(file: UploadFile):
         img = Image.open(io.BytesIO(img_data)).convert("RGB")
 
         test_transform = prepare_data()
-        pred = eval_cnn(img, test_transform, model)
+        pred = eval_cnn(img, test_transform, model, device)
         dst = judge_pred(pred)
 
         return JSONResponse(content={"id": pred, "name": dst})
