@@ -1,4 +1,5 @@
 import axios from 'axios';
+import process from 'process';
 
 interface SendProps {
   profileImage: File | null;
@@ -7,7 +8,11 @@ interface SendProps {
 }
 
 const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
-  const url: string = 'http://127.0.0.1:8000/classify/';
+  const ENV: string | undefined = process.env.ENV;
+  let url: string = 'http://127.0.0.1:8000/classify/';
+  if (ENV) {
+    url = 'https://penguin-image-classification-api.onrender.com/';
+  }
 
   const predictImage = async (): Promise<void> => {
     if (!profileImage) return;
