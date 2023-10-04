@@ -21,12 +21,20 @@ def load_model(MODEL):
 def setting_backborn(out_features):
     device = torch.device("cpu" if is_production() else "cuda")
 
-    model = models.efficientnet_v2_s(pretrained=True).to(device)
-    for param in model.parameters():
-        param.requires_grad = True
-    model.classifier = nn.Linear(in_features=1280, out_features=out_features).to(
-        device, non_blocking=True
-    )
+    if is_production():
+        model = models.mobilenet_v3_small(pretrained=True).to(device)
+        for param in model.parameters():
+            param.requires_grad = True
+        model.classifier[3] = nn.Linear(in_features=1024, out_features=out_features).to(
+            device, non_blocking=True
+        )
+    else:
+        model = models.efficientnet_v2_s(pretrained=True).to(device)
+        for param in model.parameters():
+            param.requires_grad = True
+        model.classifier = nn.Linear(in_features=1280, out_features=out_features).to(
+            device, non_blocking=True
+        )
 
     return device, model
 
