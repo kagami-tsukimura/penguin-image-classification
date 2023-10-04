@@ -31,9 +31,9 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: npm install
+        run: cd ./frontend && npm install
       - name: Build
-        run: npm ci && npm run build
+        run: cd ./frontend && npm ci && npm run build
         env:
           PUBLIC_URL: /penguin-image-classification
       - name: Upload artifact
