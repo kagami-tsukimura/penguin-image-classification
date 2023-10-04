@@ -4,12 +4,22 @@ import uvicorn
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from model.model_eval import eval_cnn, judge_pred, load_model, prepare_data
+from model.model_eval import (
+    eval_cnn,
+    is_production,
+    judge_pred,
+    load_model,
+    prepare_data,
+)
 from PIL import Image, ImageFile
 
 app = FastAPI()
 
-MODEL = "./model/efficientnet-penguin-7cls.pt"
+if is_production():
+    MODEL = "./model/mobilenet-penguin-7cls.pt"
+else:
+    MODEL = "./model/efficientnet-penguin-7cls.pt"
+
 device, model = load_model(MODEL)
 
 # CORSミドルウェアを有効にする
