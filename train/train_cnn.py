@@ -143,6 +143,15 @@ class CNNTrainer:
             model.fc = nn.Linear(
                 in_features=512, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "mobilenet":
+            model = models.mobilenet_v3_small(pretrained=True).to(
+                self.device, non_blocking=True
+            )
+            for param in model.parameters():
+                param.requires_grad = True
+            model.classifier[3] = nn.Linear(
+                in_features=1024, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
 
         return model
 
@@ -290,6 +299,11 @@ class CNNTrainer:
             cnn_model.fc = nn.Linear(
                 in_features=512, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "mobilenet":
+            cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
+            cnn_model.classifier[3] = nn.Linear(
+                in_features=1024, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
         device_ids = []
         for i in range(torch.cuda.device_count()):
             device_ids.append(i)
@@ -313,7 +327,7 @@ class CNNTrainer:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((384, 384)), transforms.ToTensor()]
             )
-        elif self.config["CNN"]["backborn"] == "resnet":
+        elif self.config["CNN"]["backborn"] in ["resnet", "mobilenet"]:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((224, 224)), transforms.ToTensor()]
             )
