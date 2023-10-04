@@ -15,7 +15,7 @@ train/mlruns
 # artifact
 *.pt
 eval.txt
-!backend/model/*.pt
+!backend/model/mobilenet*.pt
 
 # gradcam
 gradcam/heatmap/*
