@@ -25,7 +25,10 @@ device, model = load_model(MODEL)
 # CORSミドルウェアを有効にする
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # すべてのオリジンからのリクエストを許可（開発用途）
+    allow_origins=[
+        "http://127.0.0.1:8000",
+        "https://penguin-image-classification-api.onrender.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
