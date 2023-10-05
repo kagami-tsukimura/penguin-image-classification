@@ -26,8 +26,8 @@ device, model = load_model(MODEL)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1:8000",
-        "https://penguin-image-classification-api.onrender.com",
+        "http://localhost:5173/",
+        "https://kagami-tsukimura.github.io/penguin-image-classification/",
     ],
     allow_credentials=True,
     allow_methods=["*"],
