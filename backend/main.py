@@ -25,10 +25,7 @@ device, model = load_model(MODEL)
 # CORSミドルウェアを有効にする
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173/",
-        "https://kagami-tsukimura.github.io/penguin-image-classification/",
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
