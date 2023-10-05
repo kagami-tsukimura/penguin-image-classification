@@ -1,5 +1,5 @@
 import axios from 'axios';
-import process from 'process';
+import { useEffect, useState } from 'react';
 
 interface SendProps {
   profileImage: File | null;
@@ -8,11 +8,16 @@ interface SendProps {
 }
 
 const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
-  const ENV: string | undefined = process.env.ENV;
-  let url: string = 'http://127.0.0.1:8000/classify/';
-  if (ENV) {
-    url = 'https://penguin-image-classification-api.onrender.com/';
-  }
+  const [url, setUrl] = useState<string>('');
+  useEffect(() => {
+    const devUrl: string = 'http://127.0.0.1:8000/';
+    const prodUrl: string =
+      'https://penguin-image-classification-api.onrender.com/';
+    axios
+      .get(devUrl)
+      .then(() => setUrl(`${devUrl}classify/`))
+      .catch(() => setUrl(`${prodUrl}classify/`));
+  }, []);
 
   const predictImage = async (): Promise<void> => {
     if (!profileImage) return;
