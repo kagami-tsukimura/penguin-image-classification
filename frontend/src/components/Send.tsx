@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { BallTriangle } from 'react-loader-spinner';
 
 interface SendProps {
   profileImage: File | null;
@@ -9,6 +10,7 @@ interface SendProps {
 
 const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
   const [url, setUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     const devUrl: string = 'http://127.0.0.1:8000/';
     const prodUrl: string =
@@ -21,6 +23,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
 
   const predictImage = async (): Promise<void> => {
     if (!profileImage) return;
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append('file', profileImage);
@@ -33,25 +36,50 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
       .then((res) => {
         setId(Number(res.data.id));
         setName(res.data.name);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
   };
 
   return (
-    <div className='mt-8'>
-      {profileImage ? (
-        <button
-          className='button outline-sky-700  text-sky-700 hover:bg-sky-700 hover:text-white'
-          onClick={predictImage}
-        >
-          分類する
-        </button>
-      ) : (
-        <></>
-      )}
-    </div>
+    <>
+      <div className='mt-8'>
+        {profileImage ? (
+          <button
+            className='button outline-sky-700  text-sky-700 hover:bg-sky-700 hover:text-white'
+            onClick={predictImage}
+          >
+            分類する
+          </button>
+        ) : (
+          <></>
+        )}
+        {isLoading ? (
+          <div className='mt-8  text-sky-300 text-lg'>
+            <BallTriangle
+              height={100}
+              width={100}
+              radius={5}
+              color='#4da9a8'
+              ariaLabel='ball-triangle-loading'
+              visible={true}
+              wrapperStyle={{
+                transform: '(0, 0)',
+                display: 'block',
+                position: 'absolute',
+                top: `calc(50% - ${100 / 2}px)`,
+                left: `calc(50% - ${100 / 2}px)`,
+              }}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+    </>
   );
 };
 
