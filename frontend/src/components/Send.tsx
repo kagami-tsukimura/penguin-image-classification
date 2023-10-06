@@ -74,6 +74,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
                 left: `calc(50% - ${100 / 2}px)`,
               }}
             />
+            <span>ペンギン分類中...</span>
           </div>
         ) : (
           <></>
