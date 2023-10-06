@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [name, setName] = useState<string>('');
 
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <Header />
       <div className='flex items-center justify-between'>
         <div>
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Output id={id} name={name} />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
