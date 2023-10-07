@@ -7,5 +7,5 @@ export default defineConfig({
     assetsDir: './assets',
   },
   plugins: [react()],
-  base: process.env.GITHUB_PAGES ? 'penguin-image-classification' : './',
+  base: process.env.GITHUB_PAGES ? 'penguin-image-classification/' : './',
 });
