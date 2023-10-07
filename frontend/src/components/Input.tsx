@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
   };
 
   return (
-    <div className='items-center mt-8'>
+    <div className='flex flex-col items-center mt-8'>
       <div className='flex items-center justify-center'>
         {profileImage ? (
           <img
@@ -49,8 +49,8 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
       >
         画像を選択
       </button>
-      {isTooltip && (
-        <div className='absolute mt-4 text-gray-400 rounded text-xs flex items-center'>
+      {!profileImage && isTooltip && (
+        <div className='mt-4 text-gray-400 rounded text-xs flex items-center'>
           <GiPenguin />
           HINT: お気に入りのペンギンを選択してね
           <GiPenguin className='transform scale-x-[-1]' />
