@@ -51,11 +51,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
-      # Redirects
-      - name: Generate redirects
-        run: |
-          echo "/ /index.html" > redirects.conf
-      - name: Apply redirects
-        run: |
-          npx http-server -c redirects.conf -p 8080
