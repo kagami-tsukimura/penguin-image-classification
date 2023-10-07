@@ -26,7 +26,18 @@ const Output: React.FC<ApiData> = ({ id, name }) => {
                 分類結果: {name}
               </h3>
               <p className='mt-1 text-gray-800 dark:text-gray-400'>
-                種族: {topicById.desc}
+                種族:
+                {topicById.desc.map((desc, i) =>
+                  i === 0 ? (
+                    <span key={i} className='ml-1'>
+                      {desc}
+                    </span>
+                  ) : (
+                    <p key={i} className='ml-10'>
+                      {desc}
+                    </p>
+                  )
+                )}
                 <br />
                 TIPS: {topicById.tips}
                 <br />
