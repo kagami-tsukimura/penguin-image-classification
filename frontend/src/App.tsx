@@ -7,7 +7,7 @@ import Predict from './pages/Predict';
 
 export const Router: React.FC = React.memo(() => {
   return (
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <div className='flex flex-col min-h-screen'>
         <Header />
         <Routes>
