@@ -35,7 +35,7 @@ jobs:
       - name: Build
         run: cd ./frontend && npm ci && npm run build
         env:
-          PUBLIC_URL: /penguin-image-classification
+          PUBLIC_URL: https://kagami-tsukimura.github.io/penguin-image-classification/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
