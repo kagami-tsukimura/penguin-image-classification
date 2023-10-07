@@ -10,12 +10,10 @@ export const Router: React.FC = React.memo(() => {
     <BrowserRouter>
       <div className='flex flex-col min-h-screen'>
         <Header />
-        <div className='flex items-center justify-between'>
-          <Routes>
-            <Route path='/' element={<Predict />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path='/' element={<Predict />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
         <Footer />
       </div>
     </BrowserRouter>
