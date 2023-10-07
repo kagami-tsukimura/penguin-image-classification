@@ -2,7 +2,7 @@ export interface Topic {
   id: number;
   name: string;
   image: string;
-  desc: string;
+  desc: string[];
   tips: string;
   facility: string;
 }
@@ -13,7 +13,7 @@ export const topic: Topic[] = [
     name: 'コウテイペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/83259ef4-5c4c-c137-6802-11eca89f1288.jpeg',
-    desc: 'コウテイペンギン or キングペンギン',
+    desc: ['コウテイペンギン', 'キングペンギン'],
     tips: 'アプテノディテス (Aptenodytes) は「翼のない潜水者」',
     facility: '名古屋港水族館など',
   },
@@ -22,7 +22,7 @@ export const topic: Topic[] = [
     name: 'アデリーペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/1ded7855-ee42-8b56-51d2-8cefb306e70b.jpeg',
-    desc: 'アデリーペンギン or ジェンツーペンギン or ヒゲペンギン',
+    desc: ['アデリーペンギン', 'ジェンツーペンギン', 'ヒゲペンギン'],
     tips: 'ピゴスケリス (pygoscelis) は「尻についた肢（あし）」',
     facility: '名古屋港水族館など',
   },
@@ -31,7 +31,12 @@ export const topic: Topic[] = [
     name: 'フンボルトペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/0107977d-c2b8-99f4-0dfa-96131d7b7dda.jpeg',
-    desc: 'ガラパゴスペンギン or ケープペンギン or フンボルトペンギン or マゼランペンギン',
+    desc: [
+      'ガラパゴスペンギン',
+      'ケープペンギン',
+      'フンボルトペンギン',
+      'マゼランペンギン',
+    ],
     tips: 'スフィニスクス (Spheniscus) は「楔のような」',
     facility: '東山動物園など',
   },
@@ -40,7 +45,14 @@ export const topic: Topic[] = [
     name: 'マカロニペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/a40a15e8-60ce-b572-82d6-142ff72aa327.jpeg',
-    desc: 'フィヨルドランドペンギン or シュレーターペンギン or スネアーズペンギン or マカロニペンギン or ロイヤルペンギン or イワトビペンギン',
+    desc: [
+      'フィヨルドランドペンギン',
+      'シュレーターペンギン',
+      'スネアーズペンギン',
+      'マカロニペンギン',
+      'ロイヤルペンギン',
+      'イワトビペンギン',
+    ],
     tips: 'エウディプテス (Eudyptes) は「優れた潜水者」',
     facility: '新江ノ島水族館など',
   },
@@ -49,7 +61,7 @@ export const topic: Topic[] = [
     name: 'キンメペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/7d2c7fad-e847-90a2-b1a6-29a9d1bd48c9.jpeg',
-    desc: 'キンメペンギン',
+    desc: ['キンメペンギン'],
     tips: 'メガディプテス (Megadyptes) は「大型の潜水者」',
     facility: '日本では飼育されていません...',
   },
@@ -58,7 +70,7 @@ export const topic: Topic[] = [
     name: 'コガタペンギン属',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/491724a6-378e-87b4-524a-ec1bdfcb1053.jpeg',
-    desc: 'コガタペンギン or ハネジロペンギン',
+    desc: ['コガタペンギン', 'ハネジロペンギン'],
     tips: 'エウディプトゥラ (Eudyptula)は「非常に小さい」「優れた潜水者」',
     facility: '長崎ペンギン水族館など',
   },
@@ -67,7 +79,7 @@ export const topic: Topic[] = [
     name: 'その他',
     image:
       'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/60ac5d37-3f14-af42-6ef5-cf5be83ef531.jpeg',
-    desc: 'ペンギン以外',
+    desc: ['ペンギン以外'],
     tips: 'ペンギンかペンギン以外か',
     facility: 'その他',
   },

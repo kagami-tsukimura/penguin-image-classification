@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         {profileImage ? (
           <img
             src={URL.createObjectURL(profileImage)}
-            className='object-contain h-64 w-64'
+            className='object-contain h-64 w-64 mr-4'
             alt='プレビュー'
           />
         ) : (
