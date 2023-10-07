@@ -1,3 +1,5 @@
+import { IoHomeSharp } from 'react-icons/io5';
+
 const NotFound = () => {
   return (
     <div className='flex justify-center items-center h-screen'>
@@ -7,12 +9,13 @@ const NotFound = () => {
           loading='lazy'
           alt='404 Not Found'
         />
-        <div className='relative mx-auto flex h-96 w-full items-center justify-center overflow-hidden rounded-lg sm:w-96'>
+        <div className='mx-auto  w-full items-center justify-center rounded-lg sm:w-96'>
           <a
             href='/'
-            className='inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base'
+            className='flex items-center justify-center button text-violet-900 hover:bg-violet-900 hover:text-white'
           >
-            Go home
+            Go Home
+            <IoHomeSharp className='ml-1' />
           </a>
         </div>
       </div>
