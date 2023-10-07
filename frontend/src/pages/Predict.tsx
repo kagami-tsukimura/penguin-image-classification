@@ -10,13 +10,13 @@ const Predict: React.FC = () => {
   const [name, setName] = useState<string>('');
 
   return (
-    <>
+    <div className='flex items-center justify-between'>
       <div>
         <Input profileImage={profileImage} setProfileImage={setProfileImage} />
         <Send profileImage={profileImage} setId={setId} setName={setName} />
       </div>
       <Output id={id} name={name} />
-    </>
+    </div>
   );
 };
 
