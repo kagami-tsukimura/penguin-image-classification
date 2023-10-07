@@ -57,7 +57,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
           <></>
         )}
         {isLoading ? (
-          <div className='mt-8  text-sky-300 text-lg'>
+          <div className='mt-8  text-sky-300 text-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
             <BallTriangle
               height={100}
               width={100}
