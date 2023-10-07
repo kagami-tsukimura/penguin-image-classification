@@ -47,7 +47,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         onMouseMove={() => setIsTooltip(true)}
         onMouseLeave={() => setIsTooltip(false)}
       >
-        分類する画像を選択
+        画像を選択
       </button>
       {isTooltip && (
         <div className='absolute mt-4 text-gray-400 rounded text-xs flex items-center'>
