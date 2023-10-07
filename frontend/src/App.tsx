@@ -11,14 +11,8 @@ export const Router: React.FC = React.memo(() => {
       <div className='flex flex-col min-h-screen'>
         <Header />
         <Routes>
-          <Route
-            path='https://kagami-tsukimura.github.io/penguin-image-classification/'
-            element={<Predict />}
-          />
-          <Route
-            path='https://kagami-tsukimura.github.io/penguin-image-classification/*'
-            element={<NotFound />}
-          />
+          <Route path='/' element={<Predict />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
