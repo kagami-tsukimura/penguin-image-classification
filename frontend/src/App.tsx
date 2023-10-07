@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import NotFound from './pages/404';
@@ -7,7 +7,7 @@ import Predict from './pages/Predict';
 
 export const Router: React.FC = React.memo(() => {
   return (
-    <BrowserRouter>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <div className='flex flex-col min-h-screen'>
         <Header />
         <Routes>
@@ -16,7 +16,7 @@ export const Router: React.FC = React.memo(() => {
         </Routes>
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 });
 
