@@ -20,7 +20,12 @@ if is_production():
 else:
     MODEL = "./model/efficientnet-penguin-7cls.pt"
 
-device, model = load_model(MODEL)
+
+@app.on_event("startup")
+async def startup():
+    global device, model
+    device, model = load_model(MODEL)
+
 
 # CORSミドルウェアを有効にする
 app.add_middleware(
