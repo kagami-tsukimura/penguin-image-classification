@@ -7,7 +7,7 @@ import Predict from './pages/Predict';
 
 export const Router: React.FC = React.memo(() => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div className='flex flex-col min-h-screen'>
         <Header />
         <Routes>
