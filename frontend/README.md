@@ -21,6 +21,11 @@ This project is a web page that classifies penguin images.
 1. Clone the project.
 2. Run `yarn install` in the project root directory.
 3. Run `yarn dev` in the project root directory.
+
+   ```bash
+   yarn dev
+   ```
+
 4. Open a browser and navigate to `localhost:5173`.
 
 ## License
