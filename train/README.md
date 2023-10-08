@@ -1,5 +1,7 @@
 # ペンギン 6 属
 
+![_d4856f03-9b77-4447-aef9-b84f78e15fd3.jpeg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/311a14f8-d909-9258-2760-7604198bc719.jpeg)
+
 - [ペンギン 6 属](#ペンギン-6-属)
   - [Aptenodytes](#aptenodytes)
   - [Pygoscelis](#pygoscelis)
