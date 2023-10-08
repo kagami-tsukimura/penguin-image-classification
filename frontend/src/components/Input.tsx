@@ -41,16 +41,26 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         accept='image/*'
         onChange={onFileInputChange}
       />
-      <button
-        className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
-        onClick={onProfileButtonClick}
-        onMouseMove={() => setIsTooltip(true)}
-        onMouseLeave={() => setIsTooltip(false)}
-      >
-        画像を選択
-      </button>
+      <div>
+        {profileImage && (
+          <button
+            className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
+            onClick={() => setProfileImage(null)}
+          >
+            リセット
+          </button>
+        )}
+        <button
+          className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
+          onClick={onProfileButtonClick}
+          onMouseMove={() => setIsTooltip(true)}
+          onMouseLeave={() => setIsTooltip(false)}
+        >
+          {profileImage ? '画像を変更' : '画像を選択'}
+        </button>
+      </div>
       {!profileImage && isTooltip && (
-        <div className='mt-4 text-gray-400 rounded text-xs flex items-center'>
+        <div className='absolute mt-20 text-gray-400 rounded text-xs flex items-center'>
           <GiPenguin />
           HINT: お気に入りのペンギンを選択してね
           <GiPenguin className='transform scale-x-[-1]' />
