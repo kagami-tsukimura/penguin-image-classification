@@ -1,5 +1,7 @@
 # Penguin Image Classification Project
 
+![pg.jpeg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/b8d47109-468c-8f34-7ded-7db488a687d4.jpeg)
+
 This project focuses on the classification of penguin images into 7 distinct categories, including 6 different penguin genera and a non-penguin class.
 
 The primary objective is to develop and deploy a web application that allows users to interactively explore the model's predictions.
