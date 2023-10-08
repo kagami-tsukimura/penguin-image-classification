@@ -1,6 +1,6 @@
 # Penguin Image Classification
 
-![q-penguin.jpeg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/63d3a3f2-4ec2-fee2-4033-cf28121839f0.jpeg)
+![web-penguin.jpeg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/047ce82d-c477-ad9b-fce0-0026c826f332.jpeg)
 
 This project is a web page that classifies penguin images.
 
