@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import Gallary from '../components/Gallary';
 import Input from '../components/Input';
 import Output from '../components/Output';
 import Send from '../components/Send';
@@ -10,13 +11,19 @@ const Predict: React.FC = () => {
   const [name, setName] = useState<string>('');
 
   return (
-    <div className='flex items-center justify-center'>
-      <div>
-        <Input profileImage={profileImage} setProfileImage={setProfileImage} />
-        <Send profileImage={profileImage} setId={setId} setName={setName} />
+    <>
+      <div className='flex items-center justify-center'>
+        <div>
+          <Input
+            profileImage={profileImage}
+            setProfileImage={setProfileImage}
+          />
+          <Send profileImage={profileImage} setId={setId} setName={setName} />
+        </div>
+        <Output id={id} name={name} />
       </div>
-      <Output id={id} name={name} />
-    </div>
+      <Gallary />
+    </>
   );
 };
 
