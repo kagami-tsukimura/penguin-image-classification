@@ -1,4 +1,4 @@
-export interface Samples {
+interface Samples {
   id: number;
   image: string;
 }
