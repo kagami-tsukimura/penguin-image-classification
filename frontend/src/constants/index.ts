@@ -69,7 +69,7 @@ export const topic: Topic[] = [
     id: 5,
     name: 'コガタペンギン属',
     image:
-      'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/491724a6-378e-87b4-524a-ec1bdfcb1053.jpeg',
+      'https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/a3399f70-0123-31da-4412-012564a9742c.jpeg',
     desc: ['コガタペンギン', 'ハネジロペンギン'],
     tips: 'エウディプトゥラ (Eudyptula)は「非常に小さい」「優れた潜水者」',
     facility: '長崎ペンギン水族館など',
