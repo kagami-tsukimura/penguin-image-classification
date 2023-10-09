@@ -187,6 +187,11 @@ const Header: React.FC = () => {
               </svg>
               Log in
             </a> */}
+            <img
+              className='flex items-center gap-x-2 sm:border-l sm:border-gray-300 sm:my-6 sm:pl-6 dark:border-gray-700'
+              src='https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/c327ca42-1efd-a900-2bd2-086a6e7fdb77.png'
+              alt='icon'
+            ></img>
           </div>
         </div>
       </nav>
