@@ -39,7 +39,7 @@ const Gallary = () => {
                 src={sample.image}
                 loading='lazy'
                 alt={`sample-${sample.id}`}
-                className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110'
+                className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110 hover:cursor-pointer'
               />
 
               <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50'></div>
