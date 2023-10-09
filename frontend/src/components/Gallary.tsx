@@ -21,7 +21,7 @@ const Gallary = () => {
             Samples
           </h2>
           <span className='text-center text-sm text-gray-700 dark:text-gray-400 lg:text-lg'>
-            迷ったらサンプル画像をクリックして分類！
+            迷ったらサンプル画像をクリック！
           </span>
         </div>
 
