@@ -11,8 +11,8 @@ const NotFound = () => {
         />
         <div className='mx-auto  w-full items-center justify-center rounded-lg sm:w-96'>
           <a
-            href='/'
-            className='flex items-center justify-center button text-violet-900 hover:bg-violet-900 hover:text-white'
+            href='./'
+            className='flex items-center justify-center button text-white bg-violet-800 hover:bg-violet-700'
           >
             Go Home
             <IoHomeSharp className='ml-1' />

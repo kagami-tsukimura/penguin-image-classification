@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <div className='flex items-center justify-between'>
           <a
             className='whitespace-nowrap flex items-center text-2xl font-bold text-cyan-600 dark:text-cyan-200'
-            href='/'
+            href='./'
             aria-label='ペンギンの分類'
           >
             <GiPenguin />
