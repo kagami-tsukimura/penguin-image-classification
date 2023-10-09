@@ -47,11 +47,8 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
     <>
       <div className='mt-8'>
         {profileImage ? (
-          <button
-            className='button outline-sky-700  text-sky-700 hover:bg-sky-700 hover:text-white'
-            onClick={predictImage}
-          >
-            分類する
+          <button className='sendButton' onClick={predictImage}>
+            分類する 💭
           </button>
         ) : (
           <></>
