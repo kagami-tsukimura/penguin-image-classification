@@ -26,12 +26,8 @@ button {
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
@@ -56,9 +52,21 @@ p {
 }
 
 .button {
-  @apply bg-gray-100 outline-none px-4 py-2 rounded-md mt-4 mr-4 transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring font-semibold;
+  @apply px-6 py-2 rounded-md mt-4 mr-4 font-bold;
+}
+
+.changeButton {
+  @apply button text-white  bg-sky-600 hover:bg-sky-500;
+}
+
+.sendButton {
+  @apply button text-white bg-sky-600  hover:bg-black hover:outline-none hover:outline-sky-600;
+}
+
+.newtralButton {
+  @apply button text-white bg-gray-700 hover:bg-gray-600;
 }
 
 .icon {
-  @apply inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800;
+  @apply inline-flex justify-center items-center w-10 h-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:hover:text-gray-200 dark:hover:bg-gray-800;
 }

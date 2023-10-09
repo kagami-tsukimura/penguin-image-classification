@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div>
           <a
             className='flex-none text-xl font-semibold text-cyan-600 dark:text-cyan-200'
-            href='#'
+            href='/'
             aria-label='Brand'
           >
             ペンギンの分類

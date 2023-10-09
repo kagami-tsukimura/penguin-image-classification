@@ -48,15 +48,12 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
       />
       <div>
         {profileImage && (
-          <button
-            className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
-            onClick={resetFileInput}
-          >
+          <button className='newtralButton' onClick={resetFileInput}>
             リセット
           </button>
         )}
         <button
-          className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
+          className='changeButton'
           onClick={onProfileButtonClick}
           onMouseMove={() => setIsTooltip(true)}
           onMouseLeave={() => setIsTooltip(false)}

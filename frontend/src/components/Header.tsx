@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <div className='flex items-center justify-between'>
           <a
             className='whitespace-nowrap flex items-center text-2xl font-bold text-cyan-600 dark:text-cyan-200'
-            href='#'
+            href='/'
             aria-label='ペンギンの分類'
           >
             <GiPenguin />
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
           className='hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block'
         >
           <div className='flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7'>
-            <a
+            {/* <a
               className='font-medium text-blue-600 sm:py-6 dark:text-blue-500'
               href='#'
               aria-current='page'
@@ -186,7 +186,12 @@ const Header: React.FC = () => {
                 <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z' />
               </svg>
               Log in
-            </a>
+            </a> */}
+            <img
+              className='flex items-center gap-x-2 sm:border-l sm:border-gray-300 sm:my-6 sm:pl-6 dark:border-gray-700'
+              src='https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/c327ca42-1efd-a900-2bd2-086a6e7fdb77.png'
+              alt='icon'
+            ></img>
           </div>
         </div>
       </nav>
