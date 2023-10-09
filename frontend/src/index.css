@@ -51,6 +51,10 @@ button:focus-visible {
   }
 }
 
+p {
+  min-height: 1.5em;
+}
+
 .button {
   @apply bg-gray-100 outline-none px-4 py-2 rounded-md mt-4 mr-4 transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring font-semibold;
 }
