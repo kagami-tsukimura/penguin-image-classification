@@ -57,7 +57,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
           <></>
         )}
         {isLoading ? (
-          <div className='mt-8  text-sky-300 text-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <div className='mt-8  text-sky-300 text-lg fixed top-1/4 left-2/3 -translate-x-1/2 -translate-y-1/2'>
             <BallTriangle
               height={100}
               width={100}
@@ -65,15 +65,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
               color='#4da9a8'
               ariaLabel='ball-triangle-loading'
               visible={true}
-              wrapperStyle={{
-                transform: '(0, 0)',
-                display: 'block',
-                position: 'absolute',
-                top: `calc(50% - ${100 / 2}px)`,
-                left: `calc(50% - ${100 / 2}px)`,
-              }}
             />
-            <span>ペンギン分類中...</span>
           </div>
         ) : (
           <></>
