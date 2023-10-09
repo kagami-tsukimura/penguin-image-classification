@@ -21,6 +21,11 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
     setProfileImage(fileObject);
   };
 
+  const resetFileInput = () => {
+    inputRef.current && (inputRef.current.value = '');
+    setProfileImage(null);
+  };
+
   return (
     <div className='flex flex-col items-center mt-8'>
       <div className='flex items-center justify-center'>
@@ -45,7 +50,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         {profileImage && (
           <button
             className='button outline-violet-900  text-violet-900 hover:bg-violet-900 hover:text-white'
-            onClick={() => setProfileImage(null)}
+            onClick={resetFileInput}
           >
             リセット
           </button>
