@@ -1,3 +1,4 @@
+import argparse
 import io
 
 import uvicorn
@@ -63,4 +64,11 @@ async def classify_image(file: UploadFile):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, reload=True)
+    parser = argparse.ArgumentParser(description="Penguin Classification REST server")
+    parser.add_argument(
+        "--host", "-b", default="127.0.0.1", help="Interface address to bind the server"
+    )
+    parser.add_argument("--port", "-p", type=int, default="8000", help="Port to bind")
+    args = parser.parse_args()
+
+    uvicorn.run("main:app", host=args.host, port=args.port, reload=True)
