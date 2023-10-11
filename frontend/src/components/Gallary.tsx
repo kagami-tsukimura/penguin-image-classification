@@ -25,7 +25,7 @@ const Gallary = () => {
           </span>
         </div>
 
-        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8'>
+        <div className='grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 xl:gap-8'>
           {sample.map((sample) => (
             <div
               className='group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96'
