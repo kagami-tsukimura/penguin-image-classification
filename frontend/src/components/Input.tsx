@@ -27,12 +27,12 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
   };
 
   return (
-    <div className='flex flex-col items-center mt-8'>
+    <div className='flex flex-col mt-8'>
       <div className='flex items-center justify-center'>
         {profileImage ? (
           <img
             src={URL.createObjectURL(profileImage)}
-            className='object-contain h-64 w-64 mr-4'
+            className='object-contain h-64 w-64 '
             alt='プレビュー'
           />
         ) : (
@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         accept='image/*'
         onChange={onFileInputChange}
       />
-      <div>
+      <div className='flex justify-between'>
         {profileImage && (
           <button className='newtralButton' onClick={resetFileInput}>
             リセット
