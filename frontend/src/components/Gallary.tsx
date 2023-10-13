@@ -1,9 +1,13 @@
-import { useContext } from 'react';
-import { sample } from '../constants/gallary';
+import { MouseEvent, useContext, useState } from 'react';
+import { Samples, samples } from '../constants/gallary';
 import { SendContext } from '../pages/Predict';
 
 const Gallary = () => {
+  const [isChangeSample, setIsChangeSample] = useState<boolean>(true);
   const { setImage } = useContext(SendContext);
+  const [shuffledSamples, setShuffledSamples] = useState<Samples[]>(
+    samples.slice(0, 4)
+  );
 
   const fetchImage = async (imageUrl: string): Promise<File> => {
     const response = await fetch(imageUrl);
@@ -11,6 +15,27 @@ const Gallary = () => {
     return new File([imageBlob], `${imageUrl}.jpg`, {
       type: 'image/jpeg',
     });
+  };
+
+  const shuffleArray = (array: Samples[]): Samples[] => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
+    }
+    return shuffledArray;
+  };
+
+  const changeSampleHandler = async (
+    event: MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    event.preventDefault();
+    setIsChangeSample(!isChangeSample);
+    const newShuffledSamples = shuffleArray(samples).slice(0, 4);
+    setShuffledSamples(newShuffledSamples);
   };
 
   return (
@@ -24,9 +49,8 @@ const Gallary = () => {
             迷ったらサンプル画像をクリック！
           </span>
         </div>
-
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 xl:gap-8'>
-          {sample.map((sample) => (
+          {shuffledSamples.map((sample: Samples, id: number) => (
             <div
               className='group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96'
               key={sample.id}
@@ -41,14 +65,17 @@ const Gallary = () => {
                 alt={`sample-${sample.id}`}
                 className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110 hover:cursor-pointer'
               />
-
               <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50'></div>
-
               <span className='relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 backdrop-blur md:px-3 md:text-sm'>
-                {sample.id}
+                {id + 1}
               </span>
             </div>
           ))}
+        </div>
+        <div className='flex flex-col items-center mt-8'>
+          <button className='changeButton mt-8' onClick={changeSampleHandler}>
+            他の画像に変更
+          </button>
         </div>
       </div>
     </div>
