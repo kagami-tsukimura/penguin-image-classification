@@ -1,11 +1,13 @@
-import { useContext, useState } from 'react';
-import { samples } from '../constants/gallary';
+import { MouseEvent, useContext, useState } from 'react';
+import { Samples, samples } from '../constants/gallary';
 import { SendContext } from '../pages/Predict';
 
 const Gallary = () => {
   const [isChangeSample, setIsChangeSample] = useState<boolean>(true);
   const { setImage } = useContext(SendContext);
-  const [shuffledSamples, setShuffledSamples] = useState(samples.slice(0, 4));
+  const [shuffledSamples, setShuffledSamples] = useState<Samples[]>(
+    samples.slice(0, 4)
+  );
 
   const fetchImage = async (imageUrl: string): Promise<File> => {
     const response = await fetch(imageUrl);
@@ -15,15 +17,22 @@ const Gallary = () => {
     });
   };
 
-  const shuffleArray = (array: any[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
+  const shuffleArray = (array: Samples[]): Samples[] => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
     }
-    return array;
+    return shuffledArray;
   };
 
-  const changeSampleHandler = async () => {
+  const changeSampleHandler = async (
+    event: MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    event.preventDefault();
     setIsChangeSample(!isChangeSample);
     const newShuffledSamples = shuffleArray(samples).slice(0, 4);
     setShuffledSamples(newShuffledSamples);
@@ -41,7 +50,7 @@ const Gallary = () => {
           </span>
         </div>
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 xl:gap-8'>
-          {shuffledSamples.map((sample, id) => (
+          {shuffledSamples.map((sample: Samples, id: number) => (
             <div
               className='group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96'
               key={sample.id}
