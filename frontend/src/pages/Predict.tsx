@@ -21,7 +21,7 @@ const Predict: React.FC = () => {
       <SendContext.Provider
         value={{ setImage: (file) => setProfileImage(file) }}
       >
-        <div className='flex items-start justify-between'>
+        <div className='sm:flex sm:items-center sm:justify-between'>
           <div>
             <Input
               profileImage={profileImage}
