@@ -57,6 +57,18 @@ const Gallary = () => {
             </div>
           ))}
         </div>
+        <div>
+          <button
+            className='changeButton mt-8'
+            onClick={() => {
+              setIsChangeSample(!isChangeSample);
+              const newShuffledSamples = shuffleArray(samples).slice(0, 4);
+              setShuffledSamples(newShuffledSamples);
+            }}
+          >
+            他の画像に変更
+          </button>
+        </div>
       </div>
     </div>
   );
