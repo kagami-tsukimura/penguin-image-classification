@@ -3,7 +3,7 @@ interface Samples {
   image: string;
 }
 
-export const sample: Samples[] = [
+export const samples: Samples[] = [
   {
     id: 1,
     image: 'https://source.unsplash.com/aw0zJL143SI',
