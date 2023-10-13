@@ -57,7 +57,7 @@ const Gallary = () => {
             </div>
           ))}
         </div>
-        <div>
+        <div className='flex flex-col items-center mt-8'>
           <button
             className='changeButton mt-8'
             onClick={() => {
