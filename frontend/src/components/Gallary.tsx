@@ -23,6 +23,12 @@ const Gallary = () => {
     return array;
   };
 
+  const changeSampleHandler = async () => {
+    setIsChangeSample(!isChangeSample);
+    const newShuffledSamples = shuffleArray(samples).slice(0, 4);
+    setShuffledSamples(newShuffledSamples);
+  };
+
   return (
     <div className='bg-white border-b rounded-lg border-gray-200 dark:bg-gray-700 dark:border-blue-500 py-4 sm:py-6 lg:py-8 my-4 sm:my-6 lg:my-8'>
       <div className='mx-auto max-w-screen-2xl px-4 md:px-8'>
@@ -58,14 +64,7 @@ const Gallary = () => {
           ))}
         </div>
         <div className='flex flex-col items-center mt-8'>
-          <button
-            className='changeButton mt-8'
-            onClick={() => {
-              setIsChangeSample(!isChangeSample);
-              const newShuffledSamples = shuffleArray(samples).slice(0, 4);
-              setShuffledSamples(newShuffledSamples);
-            }}
-          >
+          <button className='changeButton mt-8' onClick={changeSampleHandler}>
             他の画像に変更
           </button>
         </div>
