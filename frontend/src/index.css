@@ -52,15 +52,15 @@ p {
 }
 
 .button {
-  @apply px-6 py-2 rounded-md mt-4 font-bold;
+  @apply px-6 py-2 rounded-md mt-4 font-bold  hover:translate-y-0.5 transform transition;
 }
 
 .changeButton {
-  @apply button text-white  bg-sky-700 hover:bg-sky-600;
+  @apply button text-white bg-sky-700 hover:bg-sky-600;
 }
 
 .sendButton {
-  @apply button text-white bg-red-600 hover:text-red-600 hover:bg-white hover:outline-none hover:outline-red-600;
+  @apply button text-white bg-rose-900 hover:bg-rose-800;
 }
 
 .newtralButton {
