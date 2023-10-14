@@ -62,7 +62,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
         </button>
       </div>
       {!profileImage && isTooltip && (
-        <div className='absolute mt-20 text-gray-400 rounded text-xs flex items-center'>
+        <div className='absolute mt-16 text-gray-400 rounded text-xs flex items-center'>
           <GiPenguin />
           HINT: お気に入りのペンギンを選択してね
           <GiPenguin className='transform scale-x-[-1]' />
