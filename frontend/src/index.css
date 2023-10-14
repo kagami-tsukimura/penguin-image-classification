@@ -56,11 +56,11 @@ p {
 }
 
 .changeButton {
-  @apply button text-white  bg-sky-600 hover:bg-sky-500;
+  @apply button text-white  bg-sky-700 hover:bg-sky-600;
 }
 
 .sendButton {
-  @apply button text-white bg-sky-600  hover:bg-black hover:outline-none hover:outline-sky-600;
+  @apply button text-white bg-red-600 hover:text-red-600 hover:bg-white hover:outline-none hover:outline-red-600;
 }
 
 .newtralButton {
