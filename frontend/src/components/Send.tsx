@@ -54,7 +54,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
           <></>
         )}
         {isLoading ? (
-          <div className='fixed mt-5 ml-52'>
+          <div className='absolute mt-5 ml-52'>
             <Watch
               height='40'
               width='40'
