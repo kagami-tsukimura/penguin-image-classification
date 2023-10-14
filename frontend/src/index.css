@@ -64,7 +64,7 @@ p {
 }
 
 .newtralButton {
-  @apply button text-white bg-gray-700 hover:bg-gray-600;
+  @apply button text-gray-800 dark:text-gray-300 hover:text-black hover:dark:text-white;
 }
 
 .icon {

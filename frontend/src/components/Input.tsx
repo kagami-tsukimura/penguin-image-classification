@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
       />
       <div className='flex justify-between'>
         {profileImage && (
-          <button className='newtralButton' onClick={resetFileInput}>
+          <button className='newtralButton underline' onClick={resetFileInput}>
             リセット
           </button>
         )}
