@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { BallTriangle } from 'react-loader-spinner';
+import { Watch } from 'react-loader-spinner';
 
 interface SendProps {
   profileImage: File | null;
@@ -45,7 +45,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
 
   return (
     <>
-      <div className='mt-8'>
+      <div className='flex justify-center mt-8'>
         {profileImage ? (
           <button className='sendButton' onClick={predictImage}>
             分類する 💭
@@ -54,13 +54,14 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
           <></>
         )}
         {isLoading ? (
-          <div className='mt-8  text-sky-300 text-lg fixed top-1/4 left-2/3 -translate-x-1/2 -translate-y-1/2'>
-            <BallTriangle
-              height={100}
-              width={100}
-              radius={5}
-              color='#4da9a8'
-              ariaLabel='ball-triangle-loading'
+          <div className='fixed mt-5 ml-52'>
+            <Watch
+              height='40'
+              width='40'
+              radius='48'
+              color='#FFEE99'
+              ariaLabel='watch-loading'
+              wrapperStyle={{}}
               visible={true}
             />
           </div>
