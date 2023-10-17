@@ -1,5 +1,6 @@
 import React from 'react';
 import { GiPenguin } from 'react-icons/gi';
+import DarkModeButton from './DarkModeButton';
 
 const Header: React.FC = () => {
   return (
@@ -192,6 +193,7 @@ const Header: React.FC = () => {
               src='https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/c327ca42-1efd-a900-2bd2-086a6e7fdb77.png'
               alt='icon'
             ></img>
+            <DarkModeButton />
           </div>
         </div>
       </nav>
