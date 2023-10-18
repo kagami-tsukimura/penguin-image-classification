@@ -10,7 +10,7 @@ const DarkModeButton: React.FC = () => {
       <button
         title='Change Mode'
         onClick={() => toggle()}
-        className='w-12 h-6 rounded-full p-1 bg-gray-400 dark:bg-gray-600 relative transition-colors duration-500 ease-in focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-600 focus:border-transparent '
+        className='w-12 h-6 rounded-full p-1 bg-gray-400 dark:bg-gray-600 relative transition-colors duration-500 ease-in focus:outline-none focus:border-transparent'
       >
         <div className='flex items-center justify-center'>
           {isDarkMode ? (
