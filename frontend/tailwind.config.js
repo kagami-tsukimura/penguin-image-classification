@@ -11,12 +11,6 @@ export default {
       fontFamily: {
         opensans: ['Open Sans', 'sans-serif'],
       },
-      colors: {
-        primary: {
-          light: '#ffffff',
-          dark: '#242424',
-        },
-      },
     },
   },
   plugins: [require('preline/plugin')],
