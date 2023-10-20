@@ -1,6 +1,6 @@
 import { MouseEvent, useContext, useEffect, useState } from 'react';
 import { RotatingLines } from 'react-loader-spinner';
-import { Samples, samples } from '../constants/gallary';
+import { Samples, samples } from '../constants/gallery';
 import { SendContext } from '../pages/Predict';
 
 const Gallery = () => {

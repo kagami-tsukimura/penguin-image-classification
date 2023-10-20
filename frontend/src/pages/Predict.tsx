@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import '../App.css';
-import Gallary from '../components/Gallary';
+import Gallery from '../components/Gallery';
 import Input from '../components/Input';
 import Output from '../components/Output';
 import Send from '../components/Send';
@@ -31,7 +31,7 @@ const Predict: React.FC = () => {
           </div>
           <Output id={id} name={name} />
         </div>
-        <Gallary />
+        <Gallery />
       </SendContext.Provider>
     </>
   );
