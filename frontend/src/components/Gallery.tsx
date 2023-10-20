@@ -55,7 +55,7 @@ const Gallery = () => {
     <div className='border-b rounded-lg  bg-sky-200 border-sky-500 dark:bg-gray-700 dark:border-blue-500 py-4 sm:py-6 lg:py-8 my-4 sm:my-6 lg:my-8'>
       <div className='mx-auto max-w-screen-2xl px-4 md:px-8'>
         <div className='mb-6 md:mb-10'>
-          <h2 className='mb-2 text-center text-2xl font-bold text-cyan-700 dark:text-cyan-200 md:mb-4 lg:text-3xl'>
+          <h2 className='mb-2 text-center text-2xl font-bold text-cyan-800 dark:text-cyan-200 md:mb-4 lg:text-3xl'>
             Samples
           </h2>
           <span className='text-center text-sm text-gray-950 dark:text-gray-400 lg:text-lg'>
