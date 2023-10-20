@@ -5,7 +5,7 @@ import { SendContext } from '../pages/Predict';
 
 const Gallery = () => {
   const { setImage } = useContext(SendContext);
-  const [loading, setLoading] = useState(true);
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
   const [shuffledSamples, setShuffledSamples] = useState<Samples[]>(
     samples.slice(0, 4)
   );
@@ -34,20 +34,38 @@ const Gallery = () => {
     event: MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
     event.preventDefault();
-    setLoading(true);
     const newShuffledSamples = shuffleArray(samples).slice(0, 4);
     setShuffledSamples(newShuffledSamples);
   };
 
   useEffect(() => {
     const loadImages = async () => {
+      const newLoadingMap: Record<string, boolean> = {};
+      shuffledSamples.forEach((sample) => {
+        newLoadingMap[sample.image] = true;
+      });
+      setLoadingMap(newLoadingMap);
+
       for (const sample of shuffledSamples) {
         const img = new Image();
         img.src = sample.image;
-        img.onload = () => setLoading(false);
-        img.onerror = () => setLoading(false);
+        try {
+          await new Promise<void>((resolve, reject) => {
+            img.onload = () => {
+              resolve();
+              setLoadingMap((prev) => ({ ...prev, [sample.image]: false }));
+            };
+            img.onerror = () => {
+              reject();
+              setLoadingMap((prev) => ({ ...prev, [sample.image]: false }));
+            };
+          });
+        } catch (error) {
+          setLoadingMap((prev) => ({ ...prev, [sample.image]: false }));
+        }
       }
     };
+
     loadImages();
   }, [shuffledSamples]);
 
@@ -68,13 +86,13 @@ const Gallery = () => {
               className='group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96'
               key={sample.id}
               onClick={async () => {
-                setLoading(true);
-                const file = await fetchImage(sample.image);
-                setImage(file);
-                setLoading(false);
+                if (!loadingMap[sample.image]) {
+                  const file = fetchImage(sample.image);
+                  setImage(await file);
+                }
               }}
             >
-              {loading ? (
+              {loadingMap[sample.image] ? (
                 <div>
                   <RotatingLines
                     strokeColor='grey'
