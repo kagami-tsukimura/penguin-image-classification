@@ -21,15 +21,15 @@ p {
 }
 
 .changeButton {
-  @apply button text-white bg-sky-700 hover:bg-sky-600;
+  @apply button text-gray-950 dark:text-white border-2 border-sky-700 hover:border-sky-600;
 }
 
 .sendButton {
-  @apply button text-white bg-rose-900 hover:bg-rose-800;
+  @apply button text-white bg-sky-600 hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-400;
 }
 
 .newtralButton {
-  @apply button text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 hover:dark:bg-gray-600;
+  @apply button text-gray-950 dark:text-white border-2 border-gray-500 hover:border-gray-400;
 }
 
 .icon {

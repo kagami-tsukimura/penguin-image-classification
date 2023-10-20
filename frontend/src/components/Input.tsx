@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({ profileImage, setProfileImage }) => {
           </button>
         )}
         <button
-          className='changeButton'
+          className='newtralButton'
           onClick={onProfileButtonClick}
           onMouseMove={() => setIsTooltip(true)}
           onMouseLeave={() => setIsTooltip(false)}
