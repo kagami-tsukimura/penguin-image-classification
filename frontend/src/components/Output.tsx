@@ -29,7 +29,7 @@ const Output: React.FC<ApiData> = ({ id, name }) => {
       {topicById ? (
         <div className='text-center mt-8'>
           <div className='w-[100%] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px] mx-auto'>
-            <div className='flex flex-col bg-sky-300 border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]'>
+            <div className='flex flex-col bg-sky-100 border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]'>
               <img
                 className='object-contain h-64 w-64 mx-auto'
                 src={topicById.image}

@@ -4,7 +4,7 @@ import DarkModeButton from './DarkModeButton';
 
 const Header: React.FC = () => {
   return (
-    <header className='flex justify-start z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
+    <header className='flex justify-start z-50 w-full bg-sky-100 border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
       <nav
         className='relative max-w-7xl w-full mx-auto flex items-center justify-center px-7 lg:px-8'
         aria-label='Global'
