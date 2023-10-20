@@ -1,4 +1,5 @@
 import { MouseEvent, useContext, useEffect, useState } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
 import { Samples, samples } from '../constants/gallary';
 import { SendContext } from '../pages/Predict';
 
@@ -74,7 +75,15 @@ const Gallery = () => {
               }}
             >
               {loading ? (
-                <p>Loading...</p>
+                <div>
+                  <RotatingLines
+                    strokeColor='grey'
+                    strokeWidth='5'
+                    animationDuration='0.75'
+                    width='96'
+                    visible={true}
+                  />
+                </div>
               ) : (
                 <>
                   <img
