@@ -1,10 +1,11 @@
-import { MouseEvent, useContext, useState } from 'react';
-import { Samples, samples } from '../constants/gallary';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
+import { Samples, samples } from '../constants/gallery';
 import { SendContext } from '../pages/Predict';
 
-const Gallary = () => {
-  const [isChangeSample, setIsChangeSample] = useState<boolean>(true);
+const Gallery = () => {
   const { setImage } = useContext(SendContext);
+  const [loading, setLoading] = useState(true);
   const [shuffledSamples, setShuffledSamples] = useState<Samples[]>(
     samples.slice(0, 4)
   );
@@ -33,10 +34,22 @@ const Gallary = () => {
     event: MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
     event.preventDefault();
-    setIsChangeSample(!isChangeSample);
+    setLoading(true);
     const newShuffledSamples = shuffleArray(samples).slice(0, 4);
     setShuffledSamples(newShuffledSamples);
   };
+
+  useEffect(() => {
+    const loadImages = async () => {
+      for (const sample of shuffledSamples) {
+        const img = new Image();
+        img.src = sample.image;
+        img.onload = () => setLoading(false);
+        img.onerror = () => setLoading(false);
+      }
+    };
+    loadImages();
+  }, [shuffledSamples]);
 
   return (
     <div className='bg-white border-b rounded-lg border-gray-200 dark:bg-gray-700 dark:border-blue-500 py-4 sm:py-6 lg:py-8 my-4 sm:my-6 lg:my-8'>
@@ -55,20 +68,36 @@ const Gallary = () => {
               className='group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96'
               key={sample.id}
               onClick={async () => {
+                setLoading(true);
                 const file = await fetchImage(sample.image);
                 setImage(file);
+                setLoading(false);
               }}
             >
-              <img
-                src={sample.image}
-                loading='lazy'
-                alt={`sample-${sample.id}`}
-                className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110 hover:cursor-pointer'
-              />
-              <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50'></div>
-              <span className='relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 backdrop-blur md:px-3 md:text-sm'>
-                {id + 1}
-              </span>
+              {loading ? (
+                <div>
+                  <RotatingLines
+                    strokeColor='grey'
+                    strokeWidth='5'
+                    animationDuration='0.75'
+                    width='96'
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={sample.image}
+                    loading='lazy'
+                    alt={`sample-${sample.id}`}
+                    className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110 hover:cursor-pointer'
+                  />
+                  <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50'></div>
+                  <span className='relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 backdrop-blur md:px-3 md:text-sm'>
+                    {id + 1}
+                  </span>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -82,4 +111,4 @@ const Gallary = () => {
   );
 };
 
-export default Gallary;
+export default Gallery;
