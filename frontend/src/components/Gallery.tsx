@@ -52,7 +52,7 @@ const Gallery = () => {
   }, [shuffledSamples]);
 
   return (
-    <div className='bg-white border-b rounded-lg border-gray-200 dark:bg-gray-700 dark:border-blue-500 py-4 sm:py-6 lg:py-8 my-4 sm:my-6 lg:my-8'>
+    <div className='border-b rounded-lg  bg-slate-300 border-blue-600 dark:bg-gray-700 dark:border-blue-500 py-4 sm:py-6 lg:py-8 my-4 sm:my-6 lg:my-8'>
       <div className='mx-auto max-w-screen-2xl px-4 md:px-8'>
         <div className='mb-6 md:mb-10'>
           <h2 className='mb-2 text-center text-2xl font-bold text-cyan-600 dark:text-cyan-200 md:mb-4 lg:text-3xl'>
