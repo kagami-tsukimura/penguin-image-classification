@@ -1,3 +1,4 @@
+import { AiOutlineUpCircle } from 'react-icons/ai';
 import { SiQiita } from 'react-icons/si';
 
 const Footer: React.FC = () => {
@@ -70,6 +71,11 @@ const Footer: React.FC = () => {
           </a>
           <a className='icon' href='https://qiita.com/kagami_t'>
             <SiQiita />
+          </a>
+          <a href='#top'>
+            <div className='flex flex-wrap justify-end text-2xl sm:text-3xl text-gray-950 dark:text-white hover:text-selected-text transition-all duration-300'>
+              <AiOutlineUpCircle />
+            </div>
           </a>
         </div>
         {/* <!-- End Social Brands --> */}
