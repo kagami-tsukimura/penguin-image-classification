@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
             <SiQiita />
           </a>
           <a href='#top'>
-            <div className='flex flex-wrap justify-end text-2xl sm:text-3xl hover:text-selected-text transition-all duration-300'>
+            <div className='flex flex-wrap justify-end text-2xl sm:text-3xl text-gray-950 dark:text-white hover:text-selected-text transition-all duration-300'>
               <AiOutlineUpCircle />
             </div>
           </a>
