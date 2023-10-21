@@ -93,7 +93,7 @@ const Gallery = () => {
               }}
             >
               {loadingMap[sample.image] ? (
-                <div>
+                <>
                   <RotatingLines
                     strokeColor='grey'
                     strokeWidth='5'
@@ -101,7 +101,7 @@ const Gallery = () => {
                     width='96'
                     visible={true}
                   />
-                </div>
+                </>
               ) : (
                 <>
                   <img
