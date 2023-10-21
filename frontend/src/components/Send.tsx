@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Watch } from 'react-loader-spinner';
+import { RotatingLines } from 'react-loader-spinner';
 
 interface SendProps {
   profileImage: File | null;
@@ -55,13 +55,11 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
         )}
         {isLoading ? (
           <div className='absolute mt-5 ml-52'>
-            <Watch
-              height='40'
-              width='40'
-              radius='48'
-              color='#FFEE99'
-              ariaLabel='watch-loading'
-              wrapperStyle={{}}
+            <RotatingLines
+              strokeColor='grey'
+              strokeWidth='5'
+              animationDuration='0.75'
+              width='42'
               visible={true}
             />
           </div>
