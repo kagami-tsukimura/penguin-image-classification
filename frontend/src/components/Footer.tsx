@@ -72,11 +72,15 @@ const Footer: React.FC = () => {
           <a className='icon' href='https://qiita.com/kagami_t'>
             <SiQiita />
           </a>
-          <a href='#top'>
-            <div className='flex flex-wrap justify-end text-2xl sm:text-3xl text-gray-950 dark:text-white hover:text-selected-text transition-all duration-300'>
+
+          <div className='flex justify-end'>
+            <a
+              href='#top'
+              className='text-2xl sm:text-3xl text-gray-950 dark:text-white hover:text-selected-text transition-all duration-300'
+            >
               <AiOutlineUpCircle />
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
         {/* <!-- End Social Brands --> */}
       </div>
