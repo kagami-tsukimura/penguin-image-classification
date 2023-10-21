@@ -19,7 +19,7 @@ const Header: React.FC = () => {
             ペンギンの分類
             <GiPenguin className='transform scale-x-[-1]' />
           </a>
-          <div className='flex-initial absolute right-2 gap-x-2 border-l pl-2 border-gray-300 dark:border-gray-700 sm:hidden'>
+          <div className='absolute top-12 right-2 gap-x-2 border-gray-300 dark:border-gray-700 sm:hidden'>
             <DarkModeButton />
 
             {/* <button
