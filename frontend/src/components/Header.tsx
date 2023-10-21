@@ -19,7 +19,7 @@ const Header: React.FC = () => {
             ペンギンの分類
             <GiPenguin className='transform scale-x-[-1]' />
           </a>
-          {/* <div className='sm:hidden'>
+          <div className='sm:hidden'>
             <button
               type='button'
               className='hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800'
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
                 <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z' />
               </svg>
             </button>
-          </div> */}
+          </div>
         </div>
         <div
           id='navbar-collapse-with-animation'
@@ -188,12 +188,12 @@ const Header: React.FC = () => {
               </svg>
               Log in
             </a> */}
+            <DarkModeButton />
             <img
               className='flex items-center gap-x-2 sm:border-l sm:border-gray-300 sm:my-6 sm:pl-6 dark:border-gray-700'
               src='https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3292052/c327ca42-1efd-a900-2bd2-086a6e7fdb77.png'
               alt='icon'
-            ></img>
-            <DarkModeButton />
+            />
           </div>
         </div>
       </nav>
