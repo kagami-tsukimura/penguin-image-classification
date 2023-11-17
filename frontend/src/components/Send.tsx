@@ -16,7 +16,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
     const prodUrl: string =
       'https://penguin-image-classification-api.onrender.com/';
     axios
-      .get(devUrl)
+      .get(prodUrl)
       .then(() => setUrl(`${prodUrl}classify/`))
       .catch(() => setUrl(`${devUrl}classify/`));
   }, []);
