@@ -30,6 +30,7 @@ device, model = load_model(MODEL)
 
 
 # CORSミドルウェアを有効にする
+# 一旦フルオープン
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
