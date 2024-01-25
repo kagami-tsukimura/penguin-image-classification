@@ -12,6 +12,7 @@ const Send: React.FC<SendProps> = ({ profileImage, setId, setName }) => {
   const [url, setUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
+    // ローカルとprod対応
     const devUrl: string = 'http://127.0.0.1:8000/';
     const prodUrl: string = 'https://penguin-image-classification-api.fly.dev/';
     axios
