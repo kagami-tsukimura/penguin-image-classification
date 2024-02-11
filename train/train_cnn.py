@@ -265,6 +265,10 @@ class CNNTrainer:
             log_param(f"{i}{self.config['TARGETS'][i]}", cls_weights[i])
 
     def train_cnn(self, optimizer, criterion, best_valid_loss):
+        CHECKPOINT = self.config["CNN"]["checkpoint"]
+        CHECKPOINT_DIR = f"{self.save_dir}/checkpoints"
+        os.makedirs(os.path.dirname(CHECKPOINT_DIR), exist_ok=True)
+
         for epoch in range(self.EPOCHS):
             train_loss, train_acc = self.train(
                 model, self.device, train_iterator, optimizer, criterion
@@ -277,6 +281,15 @@ class CNNTrainer:
                 best_valid_loss = valid_loss
                 torch.save(model.state_dict(), self.MODEL_SAVE_PATH)
             torch.save(model.state_dict(), self.MODEL_SAVE_PATH2)
+
+            # checkpointの保存
+            if (epoch + 1) % CHECKPOINT == 0:
+                checkpoint_path = os.path.join(
+                    CHECKPOINT_DIR,
+                    f"epoch-{epoch+1}-{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt",
+                )
+                torch.save(model.state_dict(), checkpoint_path)
+
             print(
                 f"| Epoch: {epoch+1:02} | Train Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}% | Val. Loss: {valid_loss:.3f} | Val. Acc: {valid_acc*100:.2f}% |"  # noqa
             )
