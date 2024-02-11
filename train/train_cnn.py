@@ -370,7 +370,7 @@ def parse_arguments():
         "--config",
         default="./settings.yaml",
         type=str,
-        help="Path to the configuration file",
+        help="Path to the configuration file.",
     )
     parser.add_argument(
         "-p", "--checkpoint_path", type=str, help="Path to the checkpoint file"
