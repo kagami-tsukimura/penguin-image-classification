@@ -46,7 +46,7 @@ class CNNTrainer:
         SAVE_DIR = self.config["PATH"]["model"]
         CNN_FILE = f"{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt"
         self.MODEL_SAVE_PATH = f"{self.save_dir}{CNN_FILE}"
-        self.MODEL_SAVE_PATH2 = os.path.join(SAVE_DIR, CNN_FILE)
+        self.MODEL_SAVE_PATH2 = Path(f"{SAVE_DIR}/{CNN_FILE}")
         os.makedirs(SAVE_DIR, exist_ok=True)
         self.device = torch.device("cuda")
 
