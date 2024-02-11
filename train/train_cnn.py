@@ -365,7 +365,10 @@ class CNNTrainer:
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="./settings.yaml", type=str)
+    parser.add_argument("-c", "--config", default="./settings.yaml", type=str)
+    parser.add_argument(
+        "-p", "--checkpoint_path", type=str, help="Path to the checkpoint file"
+    )
     args = parser.parse_args()
     return args
 
@@ -385,6 +388,12 @@ if __name__ == "__main__":
             model
         )
         train_cnn.log_params(cls_weights)
+
+        # Load checkpoint if specified
+        if args.checkpoint_path:
+            model.load_state_dict(torch.load(args.checkpoint_path))
+            print(f"Resume training from checkpoint: {args.checkpoint_path}")
+
         train_cnn.train_cnn(optimizer, criterion, best_valid_loss)
         train_cnn.evaluate_models()
         cnn_transforms = train_cnn.transform_for_cnn()
