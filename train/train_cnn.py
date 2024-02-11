@@ -373,7 +373,7 @@ def parse_arguments():
         help="Path to the configuration file.",
     )
     parser.add_argument(
-        "-p", "--checkpoint_path", type=str, help="Path to the checkpoint file"
+        "-p", "--checkpoint_path", type=str, help="Path to the checkpoint file."
     )
     args = parser.parse_args()
     return args
