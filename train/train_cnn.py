@@ -3,6 +3,7 @@ import os
 import random
 from datetime import datetime
 from glob import glob
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -266,8 +267,8 @@ class CNNTrainer:
 
     def train_cnn(self, optimizer, criterion, best_valid_loss):
         CHECKPOINT = self.config["CNN"]["checkpoint"]
-        CHECKPOINT_DIR = f"{self.save_dir}/checkpoints"
-        os.makedirs(os.path.dirname(CHECKPOINT_DIR), exist_ok=True)
+        CHECKPOINT_DIR = Path(f"{self.save_dir}/checkpoints")
+        CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
 
         for epoch in range(self.EPOCHS):
             train_loss, train_acc = self.train(
@@ -282,11 +283,10 @@ class CNNTrainer:
                 torch.save(model.state_dict(), self.MODEL_SAVE_PATH)
             torch.save(model.state_dict(), self.MODEL_SAVE_PATH2)
 
-            # checkpointの保存
             if (epoch + 1) % CHECKPOINT == 0:
-                checkpoint_path = os.path.join(
-                    CHECKPOINT_DIR,
-                    f"epoch-{epoch+1}-{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt",
+                checkpoint_path = (
+                    CHECKPOINT_DIR
+                    / f"epoch-{epoch+1}-{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt"
                 )
                 torch.save(model.state_dict(), checkpoint_path)
 
