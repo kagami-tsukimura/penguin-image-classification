@@ -283,6 +283,7 @@ class CNNTrainer:
                 torch.save(model.state_dict(), self.MODEL_SAVE_PATH)
             torch.save(model.state_dict(), self.MODEL_SAVE_PATH2)
 
+            # checkpointの保存
             if (epoch + 1) % CHECKPOINT == 0:
                 checkpoint_path = (
                     CHECKPOINT_DIR
