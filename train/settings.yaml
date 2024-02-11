@@ -2,13 +2,14 @@ EXPERIMENTS:
   ver: 'r0'
   mlflow: 'penguin'
 PREPARE:
-  batch_size: 16
+  batch_size: 32
 CNN:
   mode: 'penguin'
   seed: 42
   backborn: efficientnet # resnet mobilenet
   epoch: 50
   classification: 7
+  checkpoint: 10
 TARGETS:
   - Aptenodytes
   - Pygoscelis
