@@ -27,7 +27,7 @@ def setting_backborn():
         for param in model.parameters():
             param.requires_grad = True
         model.fc = nn.Linear(
-            in_features=512, out_features=config["CNN"]["classification"]
+            in_features=2048, out_features=config["CNN"]["classification"]
         ).to(device, non_blocking=True)
 
     return model

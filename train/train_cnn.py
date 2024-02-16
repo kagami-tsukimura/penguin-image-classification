@@ -142,7 +142,7 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
+                in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             model = models.mobilenet_v3_small(pretrained=True).to(
@@ -311,7 +311,7 @@ class CNNTrainer:
                 self.device, non_blocking=True
             )
             cnn_model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
+                in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
