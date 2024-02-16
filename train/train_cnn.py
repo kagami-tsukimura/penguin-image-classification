@@ -40,9 +40,8 @@ class CNNTrainer:
         work_dir = self.config["PATH"]["work"]
         self.data_dir = self.config["PATH"]["data"]
         date = datetime.now()
-        self.save_dir = f"{work_dir}{date.strftime('%Y%m%d%H%M')}_{self.config['EXPERIMENTS']['ver']}"
+        self.save_dir = f"{work_dir}{date.strftime('%Y%m%d%H%M')}_{self.config['EXPERIMENTS']['ver']}/"
         os.makedirs(self.save_dir, exist_ok=True)
-        self.save_dir = f"{self.save_dir}/"
         SAVE_DIR = self.config["PATH"]["model"]
         CNN_FILE = f"{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt"
         self.MODEL_SAVE_PATH = f"{self.save_dir}{CNN_FILE}"
@@ -142,7 +141,7 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
+                in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             model = models.mobilenet_v3_small(pretrained=True).to(
@@ -311,7 +310,7 @@ class CNNTrainer:
                 self.device, non_blocking=True
             )
             cnn_model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
+                in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
