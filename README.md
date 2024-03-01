@@ -39,7 +39,7 @@ Please note that the details provided below are subject to change as the project
 ## Contribution Guidelines
 
 Contributions to this project are welcome! If you find any issues, have suggestions for improvements, or want to add new features, feel free to open a pull request.  
- Make sure to follow the coding guidelines and project structure outlined in the repository.
+Make sure to follow the coding guidelines and project structure outlined in the repository.
 
 ## Future Improvements
 
