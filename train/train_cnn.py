@@ -13,7 +13,8 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 import torchvision.transforms as transforms
 import yaml
-from mlflow import log_metric, log_param, log_params, set_experiment, start_run, set_tracking_uri
+from mlflow import log_metric, log_param, log_params, set_experiment, start_run, set_tracking_uri, create_experiment, get_experiment_by_name, log_artifact, log_artifacts, log_dict
+from mlflow.pytorch import log_model
 from PIL import Image, ImageFile
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -40,7 +41,8 @@ class CNNTrainer:
         work_dir = self.config["PATH"]["work"]
         self.data_dir = self.config["PATH"]["data"]
         date = datetime.now()
-        self.save_dir = f"{work_dir}{date.strftime('%Y%m%d%H%M')}_{self.config['EXPERIMENTS']['ver']}/"
+        self.datetime = date.strftime('%Y%m%d%H%M')
+        self.save_dir = f"{work_dir}{self.datetime}_{self.config['EXPERIMENTS']['ver']}/"
         os.makedirs(self.save_dir, exist_ok=True)
         SAVE_DIR = self.config["PATH"]["model"]
         CNN_FILE = f"{self.config['CNN']['backborn']}-{self.config['CNN']['mode']}-{self.config['CNN']['classification']}cls.pt"
@@ -374,6 +376,12 @@ class CNNTrainer:
                     self.predict_dir(file_lists[i], cnn_transforms, cnn_model),
                     file=f,
                 )
+    
+    def save_artifacts(self, config, model):
+        log_artifact(os.path.basename(__file__))
+        log_artifact(self.save_dir)
+        log_artifact(config)
+        log_model(model, "model")
 
 
 def parse_arguments():
@@ -394,9 +402,13 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
-    # mlflowのURL指定
-    set_tracking_uri("http://mlflow-mlflo-wg8oqwixegkp-0c8c3c12eb9d84fe.elb.ap-northeast-1.amazonaws.com/")
     train_cnn = CNNTrainer(args.config)
+    # mlflowのURL指定
+    set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_url"])
+    experiment = get_experiment_by_name(train_cnn.config["EXPERIMENTS"]["mlflow"])
+    if experiment is None:
+        create_experiment(name=train_cnn.config["EXPERIMENTS"]["mlflow"], artifact_location=f"{train_cnn.config['MLFLOW']['artifact_url']}/{train_cnn.config['EXPERIMENTS']['mlflow']}/")
+
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:
         train_transforms, test_transforms = train_cnn.prepare_transform()
@@ -420,3 +432,4 @@ if __name__ == "__main__":
         cnn_transforms = train_cnn.transform_for_cnn()
         cnn_model = train_cnn.create_cnn_model()
         train_cnn.save_prediction(cnn_transforms, cnn_model)
+        train_cnn.save_artifacts(args.config, model)

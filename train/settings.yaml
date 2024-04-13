@@ -1,5 +1,5 @@
 EXPERIMENTS:
-  ver: 'r0'
+  ver: 'r1'
   mlflow: 'penguin'
 PREPARE:
   batch_size: 32
@@ -24,3 +24,6 @@ PATH:
   work: './'
   model: 'model'
   data: 'data/penguins'
+MLFLOW:
+  tracking_url: 'http://mlflow-mlflo-wg8oqwixegkp-0c8c3c12eb9d84fe.elb.ap-northeast-1.amazonaws.com/'
+  artifact_url: 's3://mlflow-artifacts-953247918566/experiments'
