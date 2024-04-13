@@ -13,7 +13,7 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 import torchvision.transforms as transforms
 import yaml
-from mlflow import log_metric, log_param, log_params, set_experiment, start_run
+from mlflow import log_metric, log_param, log_params, set_experiment, start_run, set_tracking_uri
 from PIL import Image, ImageFile
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -354,7 +354,7 @@ class CNNTrainer:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((384, 384)), transforms.ToTensor()]
             )
-        elif self.config["CNN"]["backborn"] in ["resnet", "mobilenet"]:
+        elif self.config["CNN"]["backborn"] in ["resnet", "resnet34", "mobilenet"]:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((224, 224)), transforms.ToTensor()]
             )
@@ -394,6 +394,8 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
+    # mlflowのURL指定
+    set_tracking_uri("http://mlflow-mlflo-wg8oqwixegkp-0c8c3c12eb9d84fe.elb.ap-northeast-1.amazonaws.com/")
     train_cnn = CNNTrainer(args.config)
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:
