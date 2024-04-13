@@ -432,9 +432,4 @@ if __name__ == "__main__":
         cnn_transforms = train_cnn.transform_for_cnn()
         cnn_model = train_cnn.create_cnn_model()
         train_cnn.save_prediction(cnn_transforms, cnn_model)
-
-        log_artifact("train_cnn.py")
-        log_artifact(train_cnn.save_dir)
-        log_artifact(args.config)
-        log_model(model, "model")
         train_cnn.save_artifacts(args.config, model)
