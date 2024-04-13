@@ -143,6 +143,13 @@ class CNNTrainer:
             model.fc = nn.Linear(
                 in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "resnet34":
+            model = models.resnet34(pretrained=True).to(self.device, non_blocking=True)
+            for param in model.parameters():
+                param.requires_grad = True
+            model.fc = nn.Linear(
+                in_features=512, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             model = models.mobilenet_v3_small(pretrained=True).to(
                 self.device, non_blocking=True
@@ -223,7 +230,7 @@ class CNNTrainer:
         return results
 
     def adjust_weights(self, model):
-        optimizer = optim.Adam(model.parameters())
+        optimizer = optim.Adam(model.parameters(), lr=self.config['CNN']['lr'], weight_decay=self.config['CNN']['weight_decay'])
         train_dirs = sorted(glob(f"{self.config['PATH']['data']}/train/*"))
         test_dirs = sorted(glob(f"{self.config['PATH']['data']}/test/*"))
         train_files, test_files = [], []
@@ -311,6 +318,13 @@ class CNNTrainer:
             )
             cnn_model.fc = nn.Linear(
                 in_features=2048, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "resnet34":
+            cnn_model = models.resnet34(pretrained=True).to(
+                self.device, non_blocking=True
+            )
+            cnn_model.fc = nn.Linear(
+                in_features=512, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
