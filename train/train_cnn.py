@@ -420,7 +420,6 @@ if __name__ == "__main__":
     args = parse_arguments()
     train_cnn = CNNTrainer(args.config)
 
-    run_user = os.getlogin()
     # SageMakerユーザーならFargate上のMLflowに保存
     if os.uname()[1] == "default":
         set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_url"])
