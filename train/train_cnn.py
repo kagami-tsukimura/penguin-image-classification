@@ -407,7 +407,7 @@ if __name__ == "__main__":
     set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_url"])
     experiment = get_experiment_by_name(train_cnn.config["EXPERIMENTS"]["mlflow"])
     if experiment is None:
-        create_experiment(name=train_cnn.config["EXPERIMENTS"]["mlflow"], artifact_location=train_cnn.config["MLFLOW"]["artifact_url"])
+        create_experiment(name=train_cnn.config["EXPERIMENTS"]["mlflow"], artifact_location=f"{train_cnn.config['MLFLOW']['artifact_url']}/{train_cnn.config['EXPERIMENTS']['mlflow']}/")
 
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:

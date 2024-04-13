@@ -1,13 +1,13 @@
 EXPERIMENTS:
   ver: 'r1'
-  mlflow: 'penguin-sagemaker'
+  mlflow: 'penguin'
 PREPARE:
   batch_size: 32
 CNN:
   mode: 'penguin'
   seed: 42
   backborn: resnet34 # resnet mobilenet resnet34 efficientnet
-  epoch: 2
+  epoch: 50
   classification: 7
   checkpoint: 10
   lr: 0.0001
@@ -26,4 +26,4 @@ PATH:
   data: 'data/penguins'
 MLFLOW:
   tracking_url: 'http://mlflow-mlflo-wg8oqwixegkp-0c8c3c12eb9d84fe.elb.ap-northeast-1.amazonaws.com/'
-  artifact_url: 's3://mlflow-artifacts-953247918566/experiments/'
+  artifact_url: 's3://mlflow-artifacts-953247918566/experiments'
