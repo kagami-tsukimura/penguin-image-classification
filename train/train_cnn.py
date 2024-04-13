@@ -404,12 +404,17 @@ if __name__ == "__main__":
     args = parse_arguments()
     train_cnn = CNNTrainer(args.config)
     # mlflowのURL指定
+    # FIXME: ローカルでもAWSでも動くようにする
+    # ↓↓↓start: urlをローカルでもできるように、artifact_locationはローカルでは不要（直下のmlrunsで良い）↓↓↓
     set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_url"])
     experiment = get_experiment_by_name(train_cnn.config["EXPERIMENTS"]["mlflow"])
     if experiment is None:
         create_experiment(name=train_cnn.config["EXPERIMENTS"]["mlflow"], artifact_location=f"{train_cnn.config['MLFLOW']['artifact_url']}/{train_cnn.config['EXPERIMENTS']['mlflow']}/")
 
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
+
+    # ↑↑↑end↑↑↑
+
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:
         train_transforms, test_transforms = train_cnn.prepare_transform()
         train_data, valid_data, test_data = train_cnn.load_data()
