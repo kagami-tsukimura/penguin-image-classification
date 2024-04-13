@@ -13,7 +13,7 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 import torchvision.transforms as transforms
 import yaml
-from mlflow import log_metric, log_param, log_params, set_experiment, start_run
+from mlflow import log_metric, log_param, log_params, set_experiment, start_run, set_tracking_uri
 from PIL import Image, ImageFile
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -143,6 +143,13 @@ class CNNTrainer:
             model.fc = nn.Linear(
                 in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "resnet34":
+            model = models.resnet34(pretrained=True).to(self.device, non_blocking=True)
+            for param in model.parameters():
+                param.requires_grad = True
+            model.fc = nn.Linear(
+                in_features=512, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             model = models.mobilenet_v3_small(pretrained=True).to(
                 self.device, non_blocking=True
@@ -223,7 +230,7 @@ class CNNTrainer:
         return results
 
     def adjust_weights(self, model):
-        optimizer = optim.Adam(model.parameters())
+        optimizer = optim.Adam(model.parameters(), lr=self.config['CNN']['lr'], weight_decay=self.config['CNN']['weight_decay'])
         train_dirs = sorted(glob(f"{self.config['PATH']['data']}/train/*"))
         test_dirs = sorted(glob(f"{self.config['PATH']['data']}/test/*"))
         train_files, test_files = [], []
@@ -312,6 +319,13 @@ class CNNTrainer:
             cnn_model.fc = nn.Linear(
                 in_features=2048, out_features=self.config["CNN"]["classification"]
             ).to(self.device, non_blocking=True)
+        elif self.config["CNN"]["backborn"] == "resnet34":
+            cnn_model = models.resnet34(pretrained=True).to(
+                self.device, non_blocking=True
+            )
+            cnn_model.fc = nn.Linear(
+                in_features=512, out_features=self.config["CNN"]["classification"]
+            ).to(self.device, non_blocking=True)
         elif self.config["CNN"]["backborn"] == "mobilenet":
             cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
             cnn_model.classifier[3] = nn.Linear(
@@ -340,7 +354,7 @@ class CNNTrainer:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((384, 384)), transforms.ToTensor()]
             )
-        elif self.config["CNN"]["backborn"] in ["resnet", "mobilenet"]:
+        elif self.config["CNN"]["backborn"] in ["resnet", "resnet34", "mobilenet"]:
             cnn_transforms = transforms.Compose(
                 [transforms.Resize((224, 224)), transforms.ToTensor()]
             )
@@ -380,6 +394,8 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
+    # mlflowのURL指定
+    set_tracking_uri("http://mlflow-mlflo-wg8oqwixegkp-0c8c3c12eb9d84fe.elb.ap-northeast-1.amazonaws.com/")
     train_cnn = CNNTrainer(args.config)
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:

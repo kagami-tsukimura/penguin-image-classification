@@ -6,10 +6,12 @@ PREPARE:
 CNN:
   mode: 'penguin'
   seed: 42
-  backborn: efficientnet # resnet mobilenet
+  backborn: resnet34 # resnet mobilenet resnet34 efficientnet
   epoch: 50
   classification: 7
   checkpoint: 10
+  lr: 0.0001
+  weight_decay: 0.001
 TARGETS:
   - Aptenodytes
   - Pygoscelis
