@@ -147,32 +147,44 @@ class CNNTrainer:
             )
             for param in model.parameters():
                 param.requires_grad = True
-            model.classifier = nn.Linear(
-                in_features=1280, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            model.classifier = nn.Sequential(
+                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Linear(
+                    in_features=512, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "resnet":
             model = models.resnet101(pretrained=True).to(self.device, non_blocking=True)
             for param in model.parameters():
                 param.requires_grad = True
-            model.fc = nn.Linear(
-                in_features=2048, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            model.fc = nn.Sequential(
+                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Linear(
+                    in_features=512, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "resnet34":
             model = models.resnet34(pretrained=True).to(self.device, non_blocking=True)
             for param in model.parameters():
                 param.requires_grad = True
-            model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            model.fc = nn.Sequential(
+                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Linear(
+                    in_features=512, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "mobilenet":
             model = models.mobilenet_v3_small(pretrained=True).to(
                 self.device, non_blocking=True
             )
             for param in model.parameters():
                 param.requires_grad = True
-            model.classifier[3] = nn.Linear(
-                in_features=1024, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            model.classifier[3] = nn.Sequential(
+                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Linear(
+                    in_features=512, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
 
         return model
 
