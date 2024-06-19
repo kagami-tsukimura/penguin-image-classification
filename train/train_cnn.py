@@ -6,6 +6,7 @@ from glob import glob
 from pathlib import Path
 
 import numpy as np
+import optuna
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -62,10 +63,73 @@ class CNNTrainer:
         self.MODEL_SAVE_PATH2 = Path(f"{SAVE_DIR}/{CNN_FILE}")
         os.makedirs(SAVE_DIR, exist_ok=True)
         self.device = torch.device("cuda")
+        self.dropout = self.config["CNN"]["dropout"]
+        self.lr = self.config["CNN"]["lr"]
+        self.weight_decay = self.config["CNN"]["weight_decay"]
+        self.batch_size = self.config["PREPARE"]["batch_size"]
 
     def load_settings(self):
         with open(self.CONFIG_PATH, "r") as f:
             return yaml.safe_load(f)
+
+    def create_hpo_params(self):
+        # Optunaスタディの作成
+        study = optuna.create_study(direction=self.config["CNN"]["direction"])
+        study.optimize(self.objective, n_trials=self.config["CNN"]["n_trials"])
+
+        print("Best trial:")
+        trial = study.best_trial
+
+        print(f"  Value: {trial.value}")
+        print("  Params: ")
+        for key, value in trial.params.items():
+            print(f"    {key}: {value}")
+
+        # 最適なハイパーパラメータを使って再度トレーニング
+        self.dropout = trial.params["dropout"]
+        self.lr = trial.params["lr"]
+        self.weight_decay = trial.params["weight_decay"]
+        self.batch_size = trial.params["batch_size"]
+
+    def objective(self, trial):
+        # ハイパーパラメータの提案
+        dropout_rate = trial.suggest_float("dropout", 0.2, 0.5)
+        lr = trial.suggest_loguniform("lr", 1e-5, 1e-2)
+        weight_decay = trial.suggest_loguniform("weight_decay", 1e-5, 1e-2)
+        batch_size = trial.suggest_categorical("batch_size", [32, 64, 128])
+
+        # 設定を更新
+        self.dropout = dropout_rate
+        self.lr = lr
+        self.weight_decay = weight_decay
+        self.batch_size = batch_size
+
+        # データの準備
+        train_transforms, test_transforms = self.prepare_transform()
+        train_data, valid_data, test_data = self.load_data()
+        train_iterator, valid_iterator, test_iterator = self.shuffle_data(
+            train_data, valid_data, test_data
+        )
+
+        # モデルとオプティマイザの設定
+        model = self.build_model()
+        optimizer, criterion, best_valid_loss, cls_weights = self.adjust_weights(model)
+
+        # トレーニングと評価
+        for epoch in range(self.config["CNN"]["epoch"]):
+            train_loss, train_acc = self.train(
+                model, self.device, train_iterator, optimizer, criterion
+            )
+            valid_loss, valid_acc = self.evaluate(
+                model, self.device, valid_iterator, criterion
+            )
+
+            # Early stoppingのためのプルーニングチェック
+            trial.report(valid_loss, epoch)
+            if trial.should_prune():
+                raise optuna.exceptions.TrialPruned()
+
+        return valid_loss
 
     def prepare_transform(self):
         train_transforms = transforms.Compose(
@@ -114,7 +178,7 @@ class CNNTrainer:
         return train_data, valid_data, test_data
 
     def shuffle_data(self, train_data, valid_data, test_data):
-        BATCH_SIZE = self.config["PREPARE"]["batch_size"]
+        BATCH_SIZE = self.batch_size
         train_iterator = DataLoader(
             train_data,
             shuffle=True,
@@ -148,9 +212,9 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.classifier = nn.Sequential(
-                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Dropout(p=self.dropout),
                 nn.Linear(
-                    in_features=512, out_features=self.config["CNN"]["classification"]
+                    in_features=1280, out_features=self.config["CNN"]["classification"]
                 ).to(self.device, non_blocking=True),
             )
         elif self.config["CNN"]["backborn"] == "resnet":
@@ -158,9 +222,9 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.fc = nn.Sequential(
-                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Dropout(p=self.dropout),
                 nn.Linear(
-                    in_features=512, out_features=self.config["CNN"]["classification"]
+                    in_features=2048, out_features=self.config["CNN"]["classification"]
                 ).to(self.device, non_blocking=True),
             )
         elif self.config["CNN"]["backborn"] == "resnet34":
@@ -168,7 +232,7 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.fc = nn.Sequential(
-                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Dropout(p=self.dropout),
                 nn.Linear(
                     in_features=512, out_features=self.config["CNN"]["classification"]
                 ).to(self.device, non_blocking=True),
@@ -180,9 +244,9 @@ class CNNTrainer:
             for param in model.parameters():
                 param.requires_grad = True
             model.classifier[3] = nn.Sequential(
-                nn.Dropout(p=self.config["CNN"]["dropout"]),
+                nn.Dropout(p=self.dropout),
                 nn.Linear(
-                    in_features=512, out_features=self.config["CNN"]["classification"]
+                    in_features=1024, out_features=self.config["CNN"]["classification"]
                 ).to(self.device, non_blocking=True),
             )
 
@@ -258,8 +322,8 @@ class CNNTrainer:
     def adjust_weights(self, model):
         optimizer = optim.Adam(
             model.parameters(),
-            lr=self.config["CNN"]["lr"],
-            weight_decay=self.config["CNN"]["weight_decay"],
+            lr=self.lr,
+            weight_decay=self.weight_decay,
         )
         train_dirs = sorted(glob(f"{self.config['PATH']['data']}/train/*"))
         test_dirs = sorted(glob(f"{self.config['PATH']['data']}/test/*"))
@@ -287,12 +351,16 @@ class CNNTrainer:
     def log_params(self, cls_weights):
         log_params(
             {
-                "batch_size": self.config["PREPARE"]["batch_size"],
+                "batch_size": self.batch_size,
                 "mode": self.config["CNN"]["mode"],
                 "seed": self.config["CNN"]["seed"],
                 "backborn": self.config["CNN"]["backborn"],
                 "epoch": self.config["CNN"]["epoch"],
-                "classification": self.config["CNN"]["classification"],
+                "lr": self.lr,
+                "weight_decay": self.weight_decay,
+                "dropout": self.dropout,
+                "hpo": self.config["CNN"]["hpo"],
+                "n_trials": self.config["CNN"]["n_trials"],
                 "train_data": f"{self.data_dir}/train",
                 "valid_data": f"{self.data_dir}/test",
                 "test_data": f"{self.data_dir}/test",
@@ -339,28 +407,40 @@ class CNNTrainer:
     def create_cnn_model(self):
         if self.config["CNN"]["backborn"] == "efficientnet":
             cnn_model = models.efficientnet_v2_s().to(self.device, non_blocking=True)
-            cnn_model.classifier = nn.Linear(
-                in_features=1280, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            cnn_model.classifier = nn.Sequential(
+                nn.Dropout(p=self.dropout),
+                nn.Linear(
+                    in_features=1280, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "resnet":
             cnn_model = models.resnet101(pretrained=True).to(
                 self.device, non_blocking=True
             )
-            cnn_model.fc = nn.Linear(
-                in_features=2048, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            cnn_model.fc = nn.Sequential(
+                nn.Dropout(p=self.dropout),
+                nn.Linear(
+                    in_features=2048, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "resnet34":
             cnn_model = models.resnet34(pretrained=True).to(
                 self.device, non_blocking=True
             )
-            cnn_model.fc = nn.Linear(
-                in_features=512, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            cnn_model.fc = nn.Sequential(
+                nn.Dropout(p=self.dropout),
+                nn.Linear(
+                    in_features=512, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         elif self.config["CNN"]["backborn"] == "mobilenet":
             cnn_model = models.mobilenet_v3_small().to(self.device, non_blocking=True)
-            cnn_model.classifier[3] = nn.Linear(
-                in_features=1024, out_features=self.config["CNN"]["classification"]
-            ).to(self.device, non_blocking=True)
+            cnn_model.classifier[3] = nn.Sequential(
+                nn.Dropout(p=self.dropout),
+                nn.Linear(
+                    in_features=1024, out_features=self.config["CNN"]["classification"]
+                ).to(self.device, non_blocking=True),
+            )
         device_ids = []
         for i in range(torch.cuda.device_count()):
             device_ids.append(i)
@@ -434,17 +514,20 @@ if __name__ == "__main__":
 
     # SageMakerユーザーならFargate上のMLflowに保存
     if os.uname()[1] == "default":
-        set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_url"])
+        set_tracking_uri(train_cnn.config["MLFLOW"]["tracking_uri"])
         experiment = get_experiment_by_name(train_cnn.config["EXPERIMENTS"]["mlflow"])
         if experiment is None:
             create_experiment(
                 name=train_cnn.config["EXPERIMENTS"]["mlflow"],
-                artifact_location=f"{train_cnn.config['MLFLOW']['artifact_url']}/{train_cnn.config['EXPERIMENTS']['mlflow']}/",
+                artifact_location=f"{train_cnn.config['MLFLOW']['artifact_uri']}/{train_cnn.config['EXPERIMENTS']['mlflow']}/",
             )
 
     set_experiment(train_cnn.config["EXPERIMENTS"]["mlflow"])
 
     with start_run(run_name=train_cnn.config["EXPERIMENTS"]["ver"]) as run:
+        if train_cnn.config["CNN"]["hpo"]:
+            train_cnn.create_hpo_params()
+
         train_transforms, test_transforms = train_cnn.prepare_transform()
         train_data, valid_data, test_data = train_cnn.load_data()
         train_iterator, valid_iterator, test_iterator = train_cnn.shuffle_data(
