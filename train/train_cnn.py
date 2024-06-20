@@ -116,12 +116,16 @@ class CNNTrainer:
         optimizer, criterion, best_valid_loss, cls_weights = self.adjust_weights(model)
 
         # トレーニングと評価
-        for epoch in range(self.config["CNN"]["epoch"]):
+        for epoch in range(self.config["CNN"]["hpo_epoch"]):
             train_loss, train_acc = self.train(
                 model, self.device, train_iterator, optimizer, criterion
             )
             valid_loss, valid_acc = self.evaluate(
                 model, self.device, valid_iterator, criterion
+            )
+
+            print(
+                f"| Epoch: {epoch+1:02} | Train Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}% | Val. Loss: {valid_loss:.3f} | Val. Acc: {valid_acc*100:.2f}% |"  # noqa
             )
 
             # Early stoppingのためのプルーニングチェック
@@ -166,14 +170,15 @@ class CNNTrainer:
 
         return train_transforms, test_transforms
 
-    def load_data(self):
+    def load_data(self, is_train=False):
         train_transforms, test_transforms = self.prepare_transform()
         train_data = datasets.ImageFolder(f"{self.data_dir}/train", train_transforms)
         valid_data = datasets.ImageFolder(f"{self.data_dir}/test", test_transforms)
         test_data = datasets.ImageFolder(f"{self.data_dir}/test", test_transforms)
-        print(f"Number of training data: {len(train_data)}")
-        print(f"Number of validation data: {len(valid_data)}")
-        print(f"Number of testing data: {len(test_data)}")
+        if is_train:
+            print(f"Number of training data: {len(train_data)}")
+            print(f"Number of validation data: {len(valid_data)}")
+            print(f"Number of testing data: {len(test_data)}")
 
         return train_data, valid_data, test_data
 
@@ -319,7 +324,7 @@ class CNNTrainer:
 
         return results
 
-    def adjust_weights(self, model):
+    def adjust_weights(self, model, is_train=False):
         optimizer = optim.Adam(
             model.parameters(),
             lr=self.lr,
@@ -338,11 +343,13 @@ class CNNTrainer:
                 cls_weights.append(round(max_file / train_file, 1))
         weights = torch.tensor(cls_weights).cuda()
 
-        for target, train_file, test_file, cls_weight in zip(
-            self.config["TARGETS"], train_files, test_files, cls_weights
-        ):
-            print(f"Class: {target}")
-            print(f"Train: {train_file} | Test: {test_file} | Weight: {cls_weight}")
+        if is_train:
+            for target, train_file, test_file, cls_weight in zip(
+                self.config["TARGETS"], train_files, test_files, cls_weights
+            ):
+                print(f"Class: {target}")
+                print(f"Train: {train_file} | Test: {test_file} | Weight: {cls_weight}")
+
         criterion = nn.CrossEntropyLoss(weight=weights)
         best_valid_loss = float("inf")
 
@@ -529,13 +536,13 @@ if __name__ == "__main__":
             train_cnn.create_hpo_params()
 
         train_transforms, test_transforms = train_cnn.prepare_transform()
-        train_data, valid_data, test_data = train_cnn.load_data()
+        train_data, valid_data, test_data = train_cnn.load_data(is_train=True)
         train_iterator, valid_iterator, test_iterator = train_cnn.shuffle_data(
             train_data, valid_data, test_data
         )
         model = train_cnn.build_model()
         optimizer, criterion, best_valid_loss, cls_weights = train_cnn.adjust_weights(
-            model
+            model, is_train=True
         )
         train_cnn.log_params(cls_weights)
 
